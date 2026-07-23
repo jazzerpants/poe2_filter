@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filter Preview — PoE2 Shared Duo Filter</title>
+<style>
+  :root{
+    --ground:#14100d; --ground-2:#0d0a08; --panel:#1c1917; --panel-2:#231f1b;
+    --rule:#3a322b; --ink:#c9bfb2; --ink-dim:#7d7267; --ink-faint:#4f463d;
+    --gold:#c9a227; --live:#5fa463; --warn:#b08a3a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--ground-2);color:var(--ink);
+    font:15px/1.5 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+    padding:16px;max-width:920px;margin:0 auto}
+  header{border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:16px}
+  h1{font:600 13px/1.3 ui-sans-serif,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold)}
+  .sub{font-size:12.5px;color:var(--ink-dim);margin-top:5px}
+
+  .status{display:flex;align-items:center;gap:7px;font-size:11.5px;
+    color:var(--ink-dim);margin-top:9px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--warn);flex:none}
+  .dot.live{background:var(--live)}
+  .dot.err{background:#a05050}
+
+  .control{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+    padding:14px 15px 12px;margin-bottom:14px}
+  .ctl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
+  .ctl-label{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim)}
+  .ctl-val{font:600 26px/1 ui-monospace,"SF Mono",Menlo,monospace;color:var(--gold)}
+  input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:26px;background:transparent}
+  input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--rule);border-radius:2px}
+  input[type=range]::-moz-range-track{height:3px;background:var(--rule);border-radius:2px}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;
+    border-radius:50%;background:var(--gold);border:3px solid var(--ground-2);
+    margin-top:-10px;cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;
+    background:var(--gold);border:3px solid var(--ground-2);cursor:pointer}
+  input[type=range]:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+  .bands{display:flex;gap:2px;margin-top:7px}
+  .band{flex:1;text-align:center;padding:5px 2px;font-size:9.5px;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--ink-faint);background:var(--panel-2);
+    border-radius:2px;transition:.18s}
+  .band.on{background:var(--gold);color:#191510;font-weight:600}
+
+  .opts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .opt{font:inherit;font-size:12px;padding:7px 12px;cursor:pointer;background:var(--panel);
+    color:var(--ink-dim);border:1px solid var(--rule);border-radius:3px}
+  .opt[aria-pressed=true]{background:var(--gold);color:#191510;border-color:var(--gold);font-weight:600}
+  .opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  .sec{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-faint);
+    margin:0 0 9px;display:flex;align-items:center;gap:9px}
+  .sec::after{content:"";flex:1;height:1px;background:var(--rule)}
+  .ground{background:radial-gradient(ellipse at 30% 20%,#1a1512 0,transparent 55%),
+    radial-gradient(ellipse at 75% 70%,#17120f 0,transparent 50%),var(--ground);
+    border:1px solid var(--rule);border-radius:3px;padding:16px 12px;min-height:150px;
+    display:flex;flex-direction:column;align-items:center;gap:7px}
+  .drop{display:flex;align-items:center;gap:7px;max-width:100%}
+  .beam{width:3px;height:0;border-radius:2px;flex:none}
+  .beam.on{height:26px;box-shadow:0 0 7px currentColor;background:currentColor}
+  .icon{width:13px;height:13px;flex:none;font-size:10px;line-height:13px;text-align:center}
+  .label{font-family:Georgia,"Times New Roman",serif;padding:2px 11px;border:1px solid;
+    border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    max-width:100%;cursor:pointer;text-align:center}
+  .label:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .drop.hidden .label{opacity:.3;text-decoration:line-through;text-decoration-thickness:1px}
+  .drop.hidden{filter:saturate(.25)}
+  .empty{color:var(--ink-faint);font-size:12.5px;font-style:italic;padding:22px 0}
+
+  .inspect{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+    padding:13px 14px;margin-top:16px}
+  .insp-item{font:600 14px Georgia,serif;margin-bottom:3px}
+  .insp-meta{font-size:11.5px;color:var(--ink-dim);margin-bottom:10px}
+  .verdict{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 8px;border-radius:2px;font-weight:600;margin-bottom:10px}
+  .verdict.show{background:#1f3d20;color:#7fc182}
+  .verdict.hide{background:#3d1f1f;color:#c18282}
+  pre{font:11.5px/1.55 ui-monospace,"SF Mono",Menlo,monospace;background:var(--ground-2);
+    border:1px solid var(--rule);border-radius:2px;padding:10px;overflow-x:auto;
+    color:var(--ink-dim);white-space:pre}
+  pre .k{color:var(--gold)}
+  .note{font-size:11.5px;color:var(--ink-faint);margin-top:9px;line-height:1.55}
+
+  details{margin-top:16px;background:var(--panel);border:1px solid var(--rule);border-radius:3px}
+  summary{padding:11px 14px;cursor:pointer;font-size:12px;color:var(--ink-dim);
+    list-style:none;user-select:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+ ";color:var(--gold);font-weight:600}
+  details[open] summary::before{content:"− "}
+  .drawer{padding:0 14px 14px}
+  textarea{width:100%;min-height:170px;background:var(--ground-2);color:var(--ink-dim);
+    border:1px solid var(--rule);border-radius:2px;padding:9px;
+    font:11.5px/1.5 ui-monospace,Menlo,monospace;resize:vertical}
+  textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+  .row{display:flex;gap:8px;margin-top:9px;flex-wrap:wrap}
+  footer{margin-top:22px;padding-top:13px;border-top:1px solid var(--rule);
+    font-size:11.5px;color:var(--ink-faint);line-height:1.6}
+  footer a{color:var(--ink-dim)}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Shared Duo Filter — Preview</h1>
+  <div class="sub">Monk/Martial Artist + Sorceress/Disciple of Varashta · Runes of Aldur</div>
+  <div class="status"><span class="dot" id="dot"></span><span id="src">Loading filter…</span></div>
+</header>
+
+<div class="control">
+  <div class="ctl-top">
+    <span class="ctl-label">Area Level</span>
+    <span class="ctl-val" id="lvlOut">73</span>
+  </div>
+  <input type="range" id="lvl" min="60" max="84" value="73" aria-label="Area level">
+  <div class="bands">
+    <div class="band" data-b="camp">campaign</div>
+    <div class="band" data-b="early">early maps</div>
+    <div class="band" data-b="mid">mid</div>
+    <div class="band" data-b="high">high</div>
+  </div>
+</div>
+
+<div class="opts">
+  <button class="opt" id="tAlt" aria-pressed="true">Show hidden (Alt)</button>
+  <button class="opt" id="tFx" aria-pressed="true">Beams &amp; icons</button>
+</div>
+
+<p class="sec">Ground view</p>
+<div class="ground" id="ground"></div>
+
+<div class="inspect" id="inspect">
+  <div class="insp-meta">Tap any item to see which rule matched it.</div>
+</div>
+
+<details>
+  <summary>Test an edit before committing</summary>
+  <div class="drawer">
+    <p class="note" style="margin:0 0 9px">
+      Paste filter text to preview it without touching the repo. Reload to go back to the live file.
+    </p>
+    <textarea id="paste" placeholder="Show # my new rule&#10;&#9;Class == &quot;Amulets&quot;&#10;&#9;SetFontSize 45"></textarea>
+    <div class="row">
+      <button class="opt" id="apply">Preview this</button>
+      <button class="opt" id="revert">Back to live file</button>
+    </div>
+  </div>
+</details>
+
+<footer>
+  Rules evaluate top to bottom and stop at the first match unless a block ends with
+  <strong>Continue</strong>. This preview implements that faithfully, so a broad
+  <em>Hide</em> above a narrow <em>Show</em> shadows it here exactly as in game.
+  Rendering approximates the game — PoE's Fontin typeface isn't available on the web,
+  so relative sizes are accurate but absolute pixels aren't.
+  <br><br>
+  <a href="https://github.com/jazzerpants/poe2_filter">github.com/jazzerpants/poe2_filter</a>
+</footer>
+
+<script>
+/* ------------------------------------------------------------------
+   Filter source, in order of preference:
+     1. same-origin  ./current-filter/shared.filter   (GitHub Pages)
+     2. raw.githubusercontent.com                     (CORS-enabled)
+     3. FALLBACK below                                (offline / file://)
+   The live file always wins, so this preview can't drift from the repo.
+------------------------------------------------------------------ */
+const SOURCES = [
+  {url:"./current-filter/shared.filter", label:"live from repo"},
+  {url:"https://raw.githubusercontent.com/jazzerpants/poe2_filter/main/current-filter/shared.filter",
+   label:"live from GitHub"}
+];
+
+const FALLBACK = String.raw`
+Show # QUEST ITEMS
+	Class == "Quest Items"
+	SetFontSize 45
+	SetTextColor 0 255 54
+	SetBorderColor 0 255 54
+	SetBackgroundColor 1 43 0
+	MinimapIcon 0 Green Star
+	PlayEffect Green
+
+Show # ALL UNIQUES
+	Rarity Unique
+	SetFontSize 45
+	SetTextColor 175 96 37
+	SetBorderColor 175 96 37
+	SetBackgroundColor 53 13 13
+	MinimapIcon 0 Brown Star
+	PlayEffect Brown
+
+Show # SOCKETABLES - TOP
+	BaseType "Ancient Rune" "Warding Rune" "Greater Rune" "Soul Core"
+	SetFontSize 45
+	SetTextColor 255 255 255
+	SetBorderColor 0 240 190
+	SetBackgroundColor 0 70 60
+	MinimapIcon 1 Cyan Diamond
+	PlayEffect Cyan
+
+Show # SOCKETABLES - REMAINING RUNES
+	BaseType "Rune"
+	SetFontSize 40
+	SetTextColor 220 255 250
+	SetBorderColor 0 200 160
+	SetBackgroundColor 0 45 40
+
+Show # CURRENCY - HIGH VALUE
+	Class == "Stackable Currency"
+	BaseType "Divine" "Mirror" "Exalted" "Chaos"
+	SetFontSize 45
+	SetTextColor 255 207 132
+	SetBorderColor 255 207 132
+	SetBackgroundColor 90 50 0
+	PlayEffect Yellow
+
+Show # CURRENCY - CATCH-ALL
+	Class == "Stackable Currency"
+	SetFontSize 38
+	SetTextColor 255 207 132
+
+Show # UNKNOWN - FALLBACK COPY IN USE
+	SetFontSize 45
+	SetTextColor 255 0 255
+	SetBorderColor 0 255 255
+	SetBackgroundColor 60 0 60
+`;
+
+const ITEMS = [
+  {n:"Divine Orb",            c:"Stackable Currency", r:"Currency", stack:1},
+  {n:"Chaos Orb",             c:"Stackable Currency", r:"Currency", stack:3},
+  {n:"Orb of Transmutation",  c:"Stackable Currency", r:"Currency", stack:12},
+  {n:"Omen of Amelioration",  c:"Omen",               r:"Currency"},
+  {n:"Gold",                  c:"Stackable Currency", r:"Currency", stack:420,  base:"Gold"},
+  {n:"Gold",                  c:"Stackable Currency", r:"Currency", stack:2600, base:"Gold"},
+  {n:"Ancient Rune of Prowess",c:"Socketable",        r:"Normal"},
+  {n:"Soul Core of Tacati",   c:"Socketable",         r:"Normal"},
+  {n:"Greater Iron Rune",     c:"Socketable",         r:"Normal"},
+  {n:"Lesser Storm Rune",     c:"Socketable",         r:"Normal"},
+  {n:"Idol of Oak",           c:"Socketable",         r:"Normal"},
+  {n:"Waystone (Tier 12)",    c:"Waystones",          r:"Normal", wt:12},
+  {n:"Waystone (Tier 3)",     c:"Waystones",          r:"Normal", wt:3},
+  {n:"Uncut Skill Gem",       c:"Skill Gems",         r:"Currency"},
+  {n:"Uncut Support Gem",     c:"Support Gems",       r:"Currency"},
+  {n:"Expert Quarterstaff",   c:"Quarterstaves",      r:"Rare",   il:78},
+  {n:"Advanced Quarterstaff", c:"Quarterstaves",      r:"Normal", il:82},
+  {n:"Siphoning Wand",        c:"Wands",              r:"Rare",   il:76},
+  {n:"Chiming Staff",         c:"Staves",             r:"Normal", il:81},
+  {n:"Crystal Focus",         c:"Foci",               r:"Rare",   il:74},
+  {n:"Stellar Amulet",        c:"Amulets",            r:"Rare",   il:79},
+  {n:"Grand Regalia",         c:"Body Armours",       r:"Rare",   il:80, es:120},
+  {n:"Serpentine Coat",       c:"Body Armours",       r:"Rare",   il:77, ev:180},
+  {n:"Iron Greaves",          c:"Boots",              r:"Normal", il:70, ar:90},
+  {n:"Plated Cuirass",        c:"Body Armours",       r:"Rare",   il:76, ar:210},
+  {n:"Gemini Bow",            c:"Bows",               r:"Rare",   il:75},
+  {n:"Feathered Sandals",     c:"Boots",              r:"Rare",   il:79, ev:60, es:40},
+  {n:"Sigil of Power",        c:"Body Armours",       r:"Unique", il:80},
+  {n:"Djinn Barya",           c:"Quest Items",        r:"Normal"},
+];
+
+/* ---------------- parser ---------------- */
+function parse(src){
+  const blocks=[]; let cur=null;
+  for(const raw of src.split("\n")){
+    const s=raw.trim(); if(!s) continue;
+    const head=s.split("#")[0].trim();
+    if(/^(Show|Hide)\b/.test(head)){
+      if(cur) blocks.push(cur);
+      cur={type:head.split(/\s+/)[0],
+           label:s.replace(/^(Show|Hide)\s*#?\s*/,"")||"(unlabelled)",
+           cond:[],act:[],cont:false,src:[s]};
+      continue;
+    }
+    if(!cur||s.startsWith("#")) continue;
+    cur.src.push(s);
+    if(s==="Continue") cur.cont=true;
+    else if(/^(Set|Play|Minimap|Disable|Enable|Custom)/.test(s)) cur.act.push(s);
+    else cur.cond.push(s);
+  }
+  if(cur) blocks.push(cur);
+  return blocks;
+}
+
+/* ---------------- evaluator ---------------- */
+const RARITY={Normal:0,Magic:1,Rare:2,Unique:3,Currency:9};
+const quoted=s=>(s.match(/"([^"]+)"/g)||[]).map(x=>x.slice(1,-1));
+function cmp(op,a,b){switch(op){case">=":return a>=b;case"<=":return a<=b;
+  case">":return a>b;case"<":return a<b;case"!":case"!=":return a!==b;default:return a===b;}}
+
+function condMatch(cond,it,lvl){
+  const m=cond.match(/^(\w+)\s*(==|!=|>=|<=|>|<|!|=)?\s*(.*)$/);
+  if(!m) return true;
+  const [,key,op0,rest]=m, op=op0||"=";
+  const nums=(rest.match(/-?\d+/g)||[]).map(Number);
+  const strs=quoted(rest), num=n=>cmp(op,n,nums[0]);
+  switch(key){
+    case"Class":   return strs.includes(it.c);
+    case"BaseType":return op==="=="?strs.includes(it.base||it.n)
+                                   :strs.some(s=>(it.base||it.n).includes(s));
+    case"Rarity":{
+      const want=rest.trim().split(/\s+/).filter(w=>w in RARITY);
+      if(op0&&op0!=="="&&op0!=="==") return cmp(op,RARITY[it.r]??0,RARITY[want[0]]??0);
+      return want.includes(it.r);
+    }
+    case"AreaLevel":        return num(lvl);
+    case"ItemLevel":        return num(it.il??0);
+    case"StackSize":        return num(it.stack??0);
+    case"WaystoneTier":     return num(it.wt??0);
+    case"BaseArmour":       return num(it.ar??0);
+    case"BaseEvasion":      return num(it.ev??0);
+    case"BaseEnergyShield": return num(it.es??0);
+    default: return true;
+  }
+}
+
+function evaluate(it,lvl,blocks){
+  const style={fs:32,text:"200 200 200",border:null,bg:null,icon:null,beam:null};
+  let matched=null;
+  for(const b of blocks){
+    if(!b.cond.every(c=>condMatch(c,it,lvl))) continue;
+    for(const a of b.act){
+      let m;
+      if((m=a.match(/^SetFontSize\s+(\d+)/)))                 style.fs=+m[1];
+      else if((m=a.match(/^SetTextColor\s+([\d\s]+)/)))       style.text=m[1].trim();
+      else if((m=a.match(/^SetBorderColor\s+([\d\s]+)/)))     style.border=m[1].trim();
+      else if((m=a.match(/^SetBackgroundColor\s+([\d\s]+)/))) style.bg=m[1].trim();
+      else if((m=a.match(/^MinimapIcon\s+\S+\s+(\w+)\s+(\w+)/)))style.icon=[m[1],m[2]];
+      else if((m=a.match(/^PlayEffect\s+(\w+)/)))             style.beam=m[1];
+    }
+    if(!matched) matched=b;
+    if(!b.cont) return {show:b.type==="Show",style,block:b};
+  }
+  return {show:true,style,block:matched};
+}
+
+/* ---------------- render ---------------- */
+const NAMED={Red:"#c04040",Green:"#40c040",Blue:"#4080e0",Brown:"#a07040",White:"#e8e8e8",
+  Yellow:"#e0c040",Cyan:"#40d0d0",Grey:"#909090",Orange:"#e08840",Pink:"#e070c0",Purple:"#a060e0"};
+const SHAPE={Circle:"●",Diamond:"◆",Square:"■",Star:"★",Cross:"✚",Triangle:"▲",
+  Hexagon:"⬢",Moon:"☾",Raindrop:"💧",Kite:"◇",Pentagon:"⬟"};
+const rgb=s=>{const p=s.split(/\s+/).map(Number);
+  return `rgba(${p[0]||0},${p[1]||0},${p[2]||0},${p[3]!==undefined?p[3]/255:1})`;};
+const $=id=>document.getElementById(id);
+
+let lvl=73, showHidden=true, showFx=true, sel=null, BLOCKS=[];
+const bandOf=l=>l<65?"camp":l<75?"early":l<80?"mid":"high";
+
+function render(){
+  $("lvlOut").textContent=lvl;
+  const b=bandOf(lvl);
+  document.querySelectorAll(".band").forEach(e=>e.classList.toggle("on",e.dataset.b===b));
+
+  const g=$("ground"); g.innerHTML=""; let shown=0;
+  ITEMS.forEach((it,i)=>{
+    const r=evaluate(it,lvl,BLOCKS);
+    if(!r.show&&!showHidden) return;
+    if(r.show) shown++;
+    const row=document.createElement("div");
+    row.className="drop"+(r.show?"":" hidden");
+
+    const beam=document.createElement("span");
+    beam.className="beam"+(showFx&&r.style.beam&&r.show?" on":"");
+    if(r.style.beam) beam.style.color=NAMED[r.style.beam]||"#888";
+    row.appendChild(beam);
+
+    const ic=document.createElement("span");
+    ic.className="icon";
+    if(showFx&&r.style.icon&&r.show){
+      ic.textContent=SHAPE[r.style.icon[1]]||"◆";
+      ic.style.color=NAMED[r.style.icon[0]]||"#888";
+    }
+    row.appendChild(ic);
+
+    const lab=document.createElement("button");
+    lab.className="label";
+    lab.textContent=it.n+(it.stack?` ×${it.stack}`:"");
+    lab.style.fontSize=Math.max(10,r.style.fs*0.52)+"px";
+    lab.style.color=rgb(r.style.text);
+    lab.style.borderColor=r.style.border?rgb(r.style.border):"transparent";
+    lab.style.background=r.style.bg?rgb(r.style.bg):"rgba(0,0,0,.55)";
+    lab.onclick=()=>{sel=i;render();};
+    row.appendChild(lab);
+    g.appendChild(row);
+  });
+  if(!g.children.length) g.innerHTML='<p class="empty">Everything hidden at this area level.</p>';
+
+  const ins=$("inspect");
+  if(sel===null){
+    ins.innerHTML='<div class="insp-meta">Tap any item to see which rule matched it.</div>'+
+      `<div class="note">${shown} of ${ITEMS.length} sample drops visible at area level ${lvl} · ${BLOCKS.length} rules loaded.</div>`;
+  }else{
+    const it=ITEMS[sel], r=evaluate(it,lvl,BLOCKS);
+    const meta=[it.c,it.il?`ilvl ${it.il}`:null,it.wt?`tier ${it.wt}`:null,
+      it.es?`ES ${it.es}`:null,it.ev?`EV ${it.ev}`:null,it.ar?`AR ${it.ar}`:null]
+      .filter(Boolean).join(" · ");
+    const esc=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    const code=r.block?r.block.src.map(l=>esc(l)
+      .replace(/^(Show|Hide)/,'<span class="k">$1</span>')).join("\n"):"(no rule matched)";
+    ins.innerHTML=`<div class="insp-item">${esc(it.n)}</div>`+
+      `<div class="insp-meta">${meta}</div>`+
+      `<span class="verdict ${r.show?"show":"hide"}">${r.show?"Shown":"Hidden"}</span>`+
+      `<pre>${code}</pre>`+
+      `<div class="note">First matching block wins. Rules below this one were never reached.</div>`;
+  }
+}
+
+function load(text,label,cls){
+  BLOCKS=parse(text);
+  $("src").textContent=`${label} · ${BLOCKS.length} rules`;
+  $("dot").className="dot "+cls;
+  sel=null; render();
+}
+
+async function boot(){
+  for(const s of SOURCES){
+    try{
+      const res=await fetch(s.url,{cache:"no-store"});
+      if(!res.ok) continue;
+      const txt=await res.text();
+      if(!/^(Show|Hide)/m.test(txt)) continue;
+      load(txt,s.label,"live");
+      return;
+    }catch(e){/* try next */}
+  }
+  load(FALLBACK,"bundled copy — live file unreachable","err");
+}
+
+$("lvl").addEventListener("input",e=>{lvl=+e.target.value;render();});
+$("tAlt").addEventListener("click",e=>{showHidden=!showHidden;
+  e.currentTarget.setAttribute("aria-pressed",showHidden);render();});
+$("tFx").addEventListener("click",e=>{showFx=!showFx;
+  e.currentTarget.setAttribute("aria-pressed",showFx);render();});
+$("apply").addEventListener("click",()=>{
+  const t=$("paste").value.trim();
+  if(!t){$("src").textContent="Nothing pasted";return;}
+  load(t,"pasted draft — not committed","");
+});
+$("revert").addEventListener("click",boot);
+
+boot();
+</script>
+</body>
+</html>

@@ -35,6 +35,48 @@ The game does **not** hot-reload. Every edit needs a Reload or you are testing
 the previous file. Hold **Alt** in game to reveal everything the filter hides —
 the fastest way to confirm nothing important vanished.
 
+## Live preview
+
+`index.html` is an interactive viewer, published via GitHub Pages:
+
+**https://jazzerpants.github.io/poe2_filter/**
+
+It fetches `current-filter/shared.filter` at load time, so **the preview can
+never drift from what is committed** — push a filter change and the preview
+updates itself.
+
+What it does:
+
+- **Area level slider (60–84).** Scrub it and watch rules band in and out. This
+  is the one thing that cannot be tested in game without physically travelling
+  to differently-levelled zones.
+- **Real rule engine.** Parses the filter and evaluates top-down with genuine
+  first-match-wins and `Continue` semantics — so a broad `Hide` above a narrow
+  `Show` shadows it here exactly as it does in game.
+- **Tap any item** to see the rule block that caught it and its verdict.
+- **"Show hidden (Alt)"** mirrors the in-game Alt key: hidden drops ghost out
+  rather than disappearing.
+- **Paste-to-test drawer** — preview a filter edit before committing it.
+
+Source resolution order: same-origin relative path (Pages) → raw.githubusercontent
+(CORS-enabled) → bundled fallback copy for offline use. The status dot under the
+header shows which loaded.
+
+### Enabling Pages (one time)
+
+Repo **Settings → Pages → Source: Deploy from a branch → `main` → `/ (root)` → Save.**
+First build takes a minute or two.
+
+### Fidelity limits
+
+PoE's Fontin typeface is not available on the web, so the viewer uses a serif
+approximation and scales the 1–45 font range for screen. Relative sizes are
+faithful; absolute pixels are not. Colours, borders, backgrounds, minimap icons
+and beams are read verbatim from the filter.
+
+The preview is a convenience. Ground truth is in game: drop the filter in,
+Reload, run a map, hold Alt.
+
 ## Versioning workflow
 
 Every meaningful filter change gets a tag, so any past version can be restored
