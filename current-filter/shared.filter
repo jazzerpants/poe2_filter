@@ -1,6 +1,6 @@
 #===============================================================================
 # SHARED DUO FILTER — Monk/Martial Artist + Sorceress
-# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.2.0  |  2026-07-23
+# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.3.0  |  2026-07-23
 #
 # COLOUR KEY
 #   GREEN border  = Scott's gear    (Monk / Dex+Int)
@@ -266,6 +266,21 @@ Show # MAGIC/NORMAL JEWELLERY — early maps only
 
 
 #===============================================================================
+# [4500] FLASKS — top-tier bases only, useful to both
+# Flasks otherwise drop constantly and are hidden by the Normal/Magic map rule.
+# Only the Ultimate (tier 9, lvl 60) life/mana bases are worth surfacing.
+#===============================================================================
+
+Show # ULTIMATE LIFE / MANA FLASKS — top tier, any rarity
+	BaseType == "Ultimate Life Flask" "Ultimate Mana Flask"
+	SetFontSize 40
+	SetTextColor 255 255 255
+	SetBorderColor 255 255 255
+	SetBackgroundColor 40 40 40
+	MinimapIcon 2 White Circle
+
+
+#===============================================================================
 # [5000] PARTY-DEAD ITEM CLASSES
 # Neither build uses these. Monk = Dex/Int, Sorceress = pure Int.
 # Rares still shown while in early maps for vendor/sale value; hidden later.
@@ -411,11 +426,24 @@ Show # PURE EVASION ARMOUR — rare, Scott only
 	SetTextColor 255 255 119
 	SetBorderColor 80 255 80
 
-Show # ES / EV BASES — high ilvl crafting fodder
+Show # ES BASES (incl. Armour/ES hybrids) — high ilvl crafting fodder
+	# Keyed on ES > 0, so Str/Int hybrids like a Hallowed Crown (armour AND ES)
+	# now show, not just pure-ES bases. Both builds are ES, so any ES base is fodder.
 	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
 	Rarity Normal Magic
 	ItemLevel >= 81
-	BaseArmour 0
+	BaseEnergyShield > 0
+	SetFontSize 36
+	SetTextColor 200 200 200
+	SetBorderColor 200 200 200
+
+Show # EVASION BASES — high ilvl crafting fodder (Scott)
+	# Separate block preserves pure-Evasion / EV-only fodder. Keying the rule
+	# above on ES alone would have silently dropped these.
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Normal Magic
+	ItemLevel >= 81
+	BaseEvasion > 0
 	SetFontSize 36
 	SetTextColor 200 200 200
 	SetBorderColor 200 200 200

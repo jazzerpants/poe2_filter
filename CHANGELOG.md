@@ -34,6 +34,51 @@ Verified rather than assumed:
 
 ---
 
+## v1.3.0 — 2026-07-23
+
+Two additions from play-test feedback. Both surface items that were being
+hidden.
+
+### Added
+
+- **Ultimate life/mana flasks now show.** The filter had *no* flask rule, so
+  every flask fell to the Normal/Magic map Hide. Added a Show rule for the two
+  top-tier bases (`Ultimate Life Flask` / `Ultimate Mana Flask` — tier 9, lvl
+  60), styled white = useful to both players. Lower flask tiers stay hidden on
+  purpose; only the endgame bases are worth surfacing.
+
+### Changed
+
+- **High-ilvl crafting fodder now includes Armour/ES hybrid bases.** The fodder
+  rule keyed on `BaseArmour 0` (pure ES/EV bases only), which excluded Str/Int
+  hybrids like a **Hallowed Crown** (base armour *and* ES). A Normal/Magic one
+  then fell to the map Hide and vanished — the reported symptom. Re-keyed on
+  `BaseEnergyShield > 0` so any ES base shows, hybrids included. **Split into two
+  blocks** (ES-keyed + Evasion-keyed) so pure-Evasion fodder for Scott is
+  preserved — keying on ES alone would have silently dropped it. Rare hybrids
+  were already shown by the `ES / EV-ES ARMOUR — rare` rule and are unaffected.
+
+---
+
+## v1.2.0 — 2026-07-23
+
+Bug fix from actual play — a critical league item was silently hidden.
+
+### Fixed
+
+- **Breach Wombgifts were being hidden.** Genesis Tree crafting inputs
+  (Lavish / Signet / Ornate / Banded / Revelatory Wombgift) are **not** item
+  class `Stackable Currency`, so no Show rule matched them. A Normal-rarity
+  Wombgift dropping in a map fell through to the blanket `Hide MAGIC / NORMAL —
+  maps` rule and vanished, before even reaching the magenta unrecognised-item
+  catch-all. Added a loud Show rule at the top of the currency section. The
+  match is `BaseType "Wombgift" "Womb Gift"` — substring (no `==`) so all five
+  variants and any future ones are caught, and no `Class` line so it is spelling-
+  and class-robust. This is the exact silent-hide the catch-all is meant to
+  prevent; a broad rarity Hide sitting above it created the gap.
+
+---
+
 ## v1.1.0 — 2026-07-23
 
 Scott's build confirmed: **unarmed**, Hollow Focus (bells) + Way of the Stone
