@@ -19,41 +19,44 @@ Living document. Update every session. Last updated: 2026-07-23.
 | poe.ninja | *not yet — needs level 80 for ladder indexing* |
 | Progression | Just hit endgame, early waystones |
 
-### Build notes
+### Build notes — CONFIRMED 2026-07-23
 
-Martial Artist is the third Monk ascendancy, added in 0.5 Return of the
-Ancients. Core mechanics as understood:
+**Currently UNARMED.** Running **Hollow Focus** (bells) + **Way of the Stone
+Fist**. Intends to switch to a quarterstaff later, so quarterstaff rules stay
+loud even though they are currently aspirational.
 
-- **Crit-centric loop:** summon bell → strike bell (guaranteed crit) →
-  trigger resonance → spend combo points on finishers.
-- **Hollow Techniques** — three of seven, chosen via ascendancy nodes:
-  Hollow Focus (summons ethereal bells), Hollow Form (channels illusory
-  clones that perform a socketed attack), Hollow Resonance (permanent bell
-  that resonates on every critical hit).
-- **Melee-focused**, with a glove transformation mechanic.
-- **Energy Shield sustain** primarily via combo cycling through Martial Adept.
-- **Unique to this ascendancy: extra rune slots housed in the body.** No other
-  ascendancy can do this. Gets stronger with every rune GGG adds.
+- **Way of the Stone Fist converts equipped Gloves into "Fists of Stone"** — a
+  base not obtainable by normal means. It grants Evasion Rating and Energy
+  Shield per level and replaces all modifiers with stronger variations.
+  **Gloves are therefore his weapon, not armour**, and glove base defence type
+  is irrelevant — the affixes are what convert.
+- **Hollow Focus** summons bells that are always treated as in Culling Strike
+  range, primed for stun, and guaranteed to take critical hits. Crit-centric.
+- **Has NOT yet taken Runic Meridian** — the node granting extra rune-only
+  sockets tied to helmet, body armour, gloves, and boots. This is the
+  ascendancy's signature advantage and he is not using it yet.
 
 ### Filter implications
 
-- **Socketables (runes, soul cores, talismans) = elevated priority.** More
-  slots to fill and more value per rune than any other class. Override stock
-  economy tiering upward.
-- **Dex/Int class** → Evasion and Evasion/ES hybrid bases matter. Pure Armour
-  (Str) bases are near-vendor-trash. *Check partner's build before hiding.*
-- **Crit and attack speed** weigh heavier than flat physical damage.
-- **Gloves** get their own rules, not folded into generic armour.
+- **Gloves = top-tier priority.** Sound, beam, minimap icon, largest font.
+  They are the weapon slot. Never fold them into generic armour rules, and
+  **never** add `Gloves` back to the pure-Armour `Hide`.
+- **Quarterstaves stay loud** — planned upgrade path, not current gear.
+- **Crit chance on gear matters.** Guides note the common mistake is stacking
+  crit damage before crit chance.
+- **Socketables stay elevated** even though Runic Meridian is not yet specced.
+  When he takes it the payoff is immediate and the filter is already tuned.
+- Dex/Int → Evasion and EV/ES bases for non-glove slots.
+
+### Chase item
+
+**Facebreaker** (unique gloves, returned in 0.5) is a genuine target — GGG
+confirmed Way of the Stone Fist works on unique items. Already covered by the
+`ALL UNIQUES` rule at the top of the filter.
 
 ### Open questions
 
-- [ ] **Weapon:** quarterstaff, or leaning into the glove/unarmed side?
-      (Sources note it's not really a hand-to-hand subclass despite the name,
-      so quarterstaff is likely — but unconfirmed.)
-- [ ] **Which Hollow Technique** is the build centred on — bells, clones, or
-      the rune-defensive path? Determines crit-heavy vs. defensive base
-      priorities.
-- [ ] Current gear pain points / what he's actively shopping for.
+- [ ] Nothing blocking. Next input should be in-game feedback on v1.1.0.
 
 ---
 

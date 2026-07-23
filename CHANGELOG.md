@@ -5,7 +5,7 @@ the reasoning is what prevents relitigating settled decisions later.
 
 ---
 
-## Unreleased
+## Unreleased — folded into v1.1.0
 
 ### Changed
 
@@ -31,6 +31,45 @@ Verified rather than assumed:
   both (Instruments of Power / Baryanic Leylines allow skipping summons
   entirely), so it can't be inferred from the ascendancy alone.
 - Scott's weapon (quarterstaff assumed) and which Hollow Technique he centres on.
+
+---
+
+## v1.1.0 — 2026-07-23
+
+Scott's build confirmed: **unarmed**, Hollow Focus (bells) + Way of the Stone
+Fist. This corrected a real bug.
+
+### Fixed
+
+- **Armour-base gloves were being hidden.** `Gloves` was included in the
+  pure-Armour `Hide`, so normal and magic armour-base gloves below ilvl 81 never
+  rendered. Way of the Stone Fist converts gloves into Fists of Stone, supplying
+  its own Evasion and Energy Shield per level and rewriting all modifiers — so
+  glove base defence type is irrelevant and every glove is a potential weapon
+  upgrade. `Gloves` removed from that rule, with an inline comment so it is not
+  re-added.
+
+### Changed
+
+- **Gloves promoted to weapon-tier priority.** Rare gloves now get sound, beam,
+  minimap icon and font 45 — the same treatment as a weapon, because that is
+  what they are. Previously font 40 with no sound or beam, treated as armour.
+- **All gloves shown below AreaLevel 80** regardless of rarity or base, and any
+  glove at ilvl 81+ shown at all levels.
+- Quarterstaves left loud deliberately. Scott intends to switch to one, so they
+  are an upgrade path rather than dead weight.
+
+### Notes
+
+- Runic Meridian (extra rune-only sockets on helmet, body armour, gloves, boots)
+  is **not yet specced**. Socketable priority stays elevated regardless — the
+  filter is already tuned for when he takes it.
+- Facebreaker is a live chase target; covered by the existing uniques rule.
+
+### Verified
+
+9/9 behavioural tests against the compiled filter: all five glove cases now
+show, and non-glove Armour bases still hide correctly at both levels 73 and 82.
 
 ---
 

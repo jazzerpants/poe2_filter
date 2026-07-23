@@ -1,12 +1,16 @@
 #===============================================================================
 # SHARED DUO FILTER — Monk/Martial Artist + Sorceress
-# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1  |  2026-07-23
+# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.1.0  |  2026-07-23
 #
 # COLOUR KEY
 #   GREEN border  = Scott's gear    (Monk / Dex+Int)
 #   BLUE  border  = Sorc's gear     (pure Int)
 #   WHITE border  = useful to both
 #   MAGENTA/CYAN  = UNRECOGNISED — filter needs updating, do not ignore
+#
+# SCOTT IS UNARMED. Gloves are his weapon (Way of the Stone Fist). They are
+# treated as a weapon slot, not as armour. Quarterstaves remain loud because
+# he plans to switch to one.
 #
 # RULES ARE EVALUATED TOP TO BOTTOM. FIRST MATCH WINS unless "Continue".
 # Reordering sections will change behaviour. Edit deliberately.
@@ -272,8 +276,9 @@ Hide # STR SHIELDS — pure armour, dead for both
 
 #===============================================================================
 # [6000] SCOTT — MONK / MARTIAL ARTIST  (GREEN)
-# Dex/Int. Quarterstaves. Evasion and EV/ES hybrid bases.
-# Gloves called out separately: glove transformation mechanic.
+# Hollow Focus (bells) + Way of the Stone Fist. Currently UNARMED — gloves
+# are the weapon slot and get top-tier treatment. Quarterstaves stay loud
+# because he intends to switch to one.
 #===============================================================================
 
 Show # SCOTT — QUARTERSTAVES, rare
@@ -303,21 +308,35 @@ Show # SCOTT — QUARTERSTAVES, everything else in early maps
 	SetTextColor 200 200 200
 	SetBorderColor 60 180 60
 
-Show # SCOTT — GLOVES (transformation mechanic — never fold into generic armour)
+Show # SCOTT — GLOVES, RARE  *** THIS IS HIS WEAPON ***
 	Class == "Gloves"
 	Rarity Rare
-	SetFontSize 40
+	SetFontSize 45
 	SetTextColor 255 255 119
 	SetBorderColor 80 255 80
-	SetBackgroundColor 20 45 20
+	SetBackgroundColor 25 60 25
+	PlayAlertSound 2 300
+	MinimapIcon 1 Green Diamond
+	PlayEffect Green
+
+Show # SCOTT — GLOVES, high ilvl crafting bases (any rarity)
+	Class == "Gloves"
+	ItemLevel >= 81
+	SetFontSize 42
+	SetTextColor 200 200 200
+	SetBorderColor 80 255 80
+	SetBackgroundColor 15 35 15
 	MinimapIcon 2 Green Diamond
 
-Show # SCOTT — GLOVES, high ilvl bases for crafting
+Show # SCOTT — GLOVES, everything else while still gearing
+# Base defence type is irrelevant: Way of the Stone Fist supplies its own
+# Evasion and Energy Shield per level and rewrites the affixes. Do NOT let
+# these fall through to the pure-Armour hide.
 	Class == "Gloves"
-	Rarity Normal Magic
-	ItemLevel >= 81
-	SetFontSize 38
-	SetBorderColor 80 255 80
+	AreaLevel < 80
+	SetFontSize 36
+	SetTextColor 200 200 200
+	SetBorderColor 60 180 60
 
 
 #===============================================================================
@@ -388,7 +407,10 @@ Show # ES / EV BASES — high ilvl crafting fodder
 	SetBorderColor 200 200 200
 
 Hide # PURE ARMOUR BASES — dead for both builds
-	Class == "Body Armours" "Boots" "Helmets" "Gloves" "Shields"
+# NOTE: "Gloves" deliberately absent. Way of the Stone Fist converts Scott's
+# gloves into Fists of Stone, so glove base defence type is irrelevant and
+# every glove is a potential weapon upgrade. Do not re-add Gloves here.
+	Class == "Body Armours" "Boots" "Helmets" "Shields"
 	BaseArmour > 0
 	BaseEnergyShield 0
 	BaseEvasion 0
