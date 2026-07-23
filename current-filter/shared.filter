@@ -110,6 +110,20 @@ Show # SOCKETABLES — ALL REMAINING RUNES (future-proof catch-all)
 # [2000] CURRENCY
 #===============================================================================
 
+Show # BREACH — WOMBGIFTS (Genesis Tree crafting inputs — NEVER hide)
+	# Lavish / Signet / Ornate / Banded / Revelatory Wombgift. Substring match
+	# (no ==) is deliberate — future variants are caught automatically, same
+	# philosophy as the rune rules. They are NOT class "Stackable Currency", so
+	# without this they fall through to the Normal/Magic map Hide and vanish.
+	BaseType "Wombgift" "Womb Gift"
+	SetFontSize 45
+	SetTextColor 255 255 255
+	SetBorderColor 200 40 200
+	SetBackgroundColor 60 0 60
+	PlayAlertSound 1 300
+	MinimapIcon 0 Purple Star
+	PlayEffect Purple
+
 Show # CURRENCY — HIGH VALUE
 	Class == "Stackable Currency"
 	BaseType "Divine" "Mirror" "Exalted" "Annulment" "Chaos" "Vaal" "Regal" "Perfect Jeweller"
