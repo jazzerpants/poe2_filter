@@ -17,12 +17,12 @@ keep that file correct and to make its behaviour inspectable.
 | | |
 |---|---|
 | League | Runes of Aldur (0.5), Trade Softcore |
-| Scott | Monk / **Martial Artist**, level 73 |
+| Scott | Monk / **Martial Artist**, level 73 — **UNARMED**, Hollow Focus (bells) + Way of the Stone Fist |
 | Partner | Sorceress / **Disciple of Varashta**, level 73 |
 | Progress | Just hit endgame, early waystones |
-| Filter | v1.0.0 — **written but not yet play-tested** |
+| Filter | v1.1.0 — **still not play-tested** |
 
-**v1.0.0 has never been run in a map.** No tuning feedback exists yet. The first
+**No version has been run in a map yet.** No tuning feedback exists yet. The first
 real session should be about what felt wrong in game, not about adding features.
 
 ## Start a session by doing this
@@ -47,6 +47,10 @@ Settled deliberately. Don't relitigate without new information.
   read character level. Bands (`<65` / `65–74` / `75–79` / `80+`) mean the filter
   self-adjusts as they climb, with no manual edits. A level-up is **not** a
   reason to change the filter.
+- **Gloves are Scott's weapon, not armour.** Way of the Stone Fist converts them
+  to Fists of Stone with its own Evasion/ES and rewritten modifiers, so base
+  defence type is irrelevant. **Never add `Gloves` to the pure-Armour `Hide`** —
+  that was a real bug fixed in v1.1.0.
 - **Socketables are elevated for Scott.** Martial Artist is the only ascendancy
   with extra body rune slots. Rune rules use substring `BaseType` matching (no
   `==`) deliberately, so runes added in future patches are caught automatically.
@@ -92,14 +96,12 @@ Docs-only changes get a normal commit and **no tag**.
 
 These are genuinely unresolved and affect filter tuning:
 
-- **Scott's weapon.** Quarterstaff is *assumed* and baked into ~4 rules. Not
-  confirmed. Martial Artist also has a glove transformation mechanic, so the
-  assumption is not free.
-- **Which Hollow Technique** Scott's build centres on — bells, clones, or the
-  rune-defensive path. Determines crit-heavy vs defensive base priorities.
 - **Partner: summoner-leaning or pure caster?** Disciple of Varashta supports
   both — some nodes let her skip summoning entirely. Affects how hard to
-  prioritise Sceptres and Spirit-granting gear.
+  prioritise Sceptres and Spirit-granting gear. *Only remaining build gap.*
+
+Scott's build is confirmed as of v1.1.0 — unarmed, bells, Way of the Stone Fist,
+switching to quarterstaff later.
 
 A Path of Building 2 export code from either player would answer most of this at
 once. A passive tree URL (`pathofexile2.com/game/passive-skill-tree/...`) is a
