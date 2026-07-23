@@ -131,6 +131,13 @@ weaker second option — it decodes to node *hashes* needing a lookup table.
   never matches and the item silently disappears. `validate.py` checks these
   against `references/item-classes.txt`. Refresh that list when a new league
   changes item classes (command in `README.md`).
+- **`BaseType` is the opposite of `Class` — a bad token is FATAL.** A `BaseType`
+  string that matches no real base makes PoE2 refuse to load the *entire* filter
+  ("Unable to parse parameter for BaseType rule"). `validate.py` does NOT catch
+  this — it checks Class names, not BaseType strings. So never add a speculative
+  or unverified BaseType as a hedge; verify the exact base first. This shipped as
+  a real bug in v1.2.0/v1.3.0 (`"Womb Gift"` two-word hedge) — see CHANGELOG
+  v1.3.1.
 
 ## Files
 

@@ -1,6 +1,6 @@
 #===============================================================================
 # SHARED DUO FILTER — Monk/Martial Artist + Sorceress
-# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.3.0  |  2026-07-23
+# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.3.1  |  2026-07-23
 #
 # COLOUR KEY
 #   GREEN border  = Scott's gear    (Monk / Dex+Int)
@@ -115,7 +115,7 @@ Show # BREACH — WOMBGIFTS (Genesis Tree crafting inputs — NEVER hide)
 	# (no ==) is deliberate — future variants are caught automatically, same
 	# philosophy as the rune rules. They are NOT class "Stackable Currency", so
 	# without this they fall through to the Normal/Magic map Hide and vanish.
-	BaseType "Wombgift" "Womb Gift"
+	BaseType "Wombgift"
 	SetFontSize 45
 	SetTextColor 255 255 255
 	SetBorderColor 200 40 200

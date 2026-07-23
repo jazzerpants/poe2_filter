@@ -34,6 +34,29 @@ Verified rather than assumed:
 
 ---
 
+## v1.3.1 — 2026-07-23
+
+Hotfix — v1.3.0 (and v1.2.0) failed to load in-game.
+
+### Fixed
+
+- **Wombgift rule broke the whole filter.** The rule matched
+  `BaseType "Wombgift" "Womb Gift"` — the two-word `"Womb Gift"` was a
+  speculative hedge against an unknown spelling. It matches no real base, and
+  **PoE2 hard-errors on a `BaseType` token that matches nothing** ("Unable to
+  parse parameter for BaseType rule"), refusing to load the entire filter.
+  Removed the bad token; the correct base is one word (`Wombgift`, substring-
+  matching "Lavish Wombgift" etc.).
+
+**Lesson for future rules:** `BaseType` is *not* like `Class`. A bad `Class`
+name silently never matches (CLAUDE.md gotcha); a bad `BaseType` token **fails
+the whole filter to load**. Never add speculative/unverified `BaseType` strings
+as a hedge — verify the exact base first. `validate.py` does not catch this (it
+checks Class names, not BaseType strings), so a bad BaseType passes validation
+and only surfaces in-game.
+
+---
+
 ## v1.3.0 — 2026-07-23
 
 Two additions from play-test feedback. Both surface items that were being
