@@ -1,0 +1,8 @@
+# Downloaded reference filters (large, not ours)
+ns.filter
+*.tmp
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini

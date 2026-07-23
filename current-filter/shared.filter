@@ -1,0 +1,442 @@
+#===============================================================================
+# SHARED DUO FILTER — Monk/Martial Artist + Sorceress
+# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1  |  2026-07-23
+#
+# COLOUR KEY
+#   GREEN border  = Scott's gear    (Monk / Dex+Int)
+#   BLUE  border  = Sorc's gear     (pure Int)
+#   WHITE border  = useful to both
+#   MAGENTA/CYAN  = UNRECOGNISED — filter needs updating, do not ignore
+#
+# RULES ARE EVALUATED TOP TO BOTTOM. FIRST MATCH WINS unless "Continue".
+# Reordering sections will change behaviour. Edit deliberately.
+#
+# AreaLevel bands:  <65 campaign | 65-74 early maps | 75-79 mid | 80+ high
+#===============================================================================
+
+
+#===============================================================================
+# [0000] SAFETY NET — never hide these
+#===============================================================================
+
+Show # QUEST ITEMS
+	Class == "Quest Items"
+	SetFontSize 45
+	SetTextColor 0 255 54
+	SetBorderColor 0 255 54
+	SetBackgroundColor 1 43 0
+	PlayAlertSound 7 300
+	MinimapIcon 0 Green Star
+	PlayEffect Green
+
+Show # PINNACLE / VAULT KEYS
+	Class == "Pinnacle Keys" "Vault Keys"
+	SetFontSize 45
+	SetTextColor 255 255 255
+	SetBorderColor 255 0 255
+	SetBackgroundColor 90 0 90
+	PlayAlertSound 6 300
+	MinimapIcon 0 Purple Star
+	PlayEffect Purple
+
+Show # FISHING ROD (it's a meme, but never hide it)
+	Class == "Fishing Rods"
+	SetFontSize 45
+	SetTextColor 0 255 255
+	SetBorderColor 0 255 255
+	PlayAlertSound 6 300
+	MinimapIcon 0 Cyan Star
+	PlayEffect Cyan
+
+
+#===============================================================================
+# [1000] UNIQUES
+# PoE2 can't distinguish which unique is on a shared base, so all uniques
+# get shown. Tier manually later if specific ones become clutter.
+#===============================================================================
+
+Show # ALL UNIQUES
+	Rarity Unique
+	SetFontSize 45
+	SetTextColor 175 96 37
+	SetBorderColor 175 96 37
+	SetBackgroundColor 53 13 13
+	PlayAlertSound 3 300
+	MinimapIcon 0 Brown Star
+	PlayEffect Brown
+
+
+#===============================================================================
+# [1900] SOCKETABLES — RUNES / SOUL CORES / IDOLS
+# *** SCOTT PRIORITY OVERRIDE ***
+# Martial Artist is the only ascendancy with extra body rune slots. These are
+# worth materially more to this party than to anyone else. Substring matching
+# (no "==") is deliberate: it catches runes GGG adds in future patches.
+#===============================================================================
+
+Show # SOCKETABLES — GREATER / ANCIENT / WARDING / SOUL CORES (top shelf)
+	BaseType "Ancient Rune" "Warding Rune" "Greater Rune" "Soul Core"
+	SetFontSize 45
+	SetTextColor 255 255 255
+	SetBorderColor 0 240 190
+	SetBackgroundColor 0 70 60
+	PlayAlertSound 2 300
+	MinimapIcon 1 Cyan Diamond
+	PlayEffect Cyan
+
+Show # SOCKETABLES — IDOLS
+	BaseType "Idol"
+	SetFontSize 42
+	SetTextColor 255 255 255
+	SetBorderColor 0 240 190
+	SetBackgroundColor 0 55 48
+	PlayAlertSound 2 250
+	MinimapIcon 1 Cyan Diamond
+
+Show # SOCKETABLES — ALL REMAINING RUNES (future-proof catch-all)
+	BaseType "Rune"
+	SetFontSize 40
+	SetTextColor 220 255 250
+	SetBorderColor 0 200 160
+	SetBackgroundColor 0 45 40
+	MinimapIcon 2 Cyan Diamond
+
+
+#===============================================================================
+# [2000] CURRENCY
+#===============================================================================
+
+Show # CURRENCY — HIGH VALUE
+	Class == "Stackable Currency"
+	BaseType "Divine" "Mirror" "Exalted" "Annulment" "Chaos" "Vaal" "Regal" "Perfect Jeweller"
+	SetFontSize 45
+	SetTextColor 255 207 132
+	SetBorderColor 255 207 132
+	SetBackgroundColor 90 50 0
+	PlayAlertSound 1 300
+	MinimapIcon 0 Yellow Circle
+	PlayEffect Yellow
+
+Show # OMENS
+	Class == "Omen"
+	SetFontSize 44
+	SetTextColor 255 160 255
+	SetBorderColor 255 160 255
+	SetBackgroundColor 70 0 70
+	PlayAlertSound 2 300
+	MinimapIcon 1 Pink Circle
+	PlayEffect Pink
+
+Show # CURRENCY — CATCH-ALL
+	Class == "Stackable Currency"
+	SetFontSize 38
+	SetTextColor 255 207 132
+	SetBorderColor 150 120 80
+
+Show # GOLD — meaningful stacks only, scaled by band
+	BaseType == "Gold"
+	StackSize >= 1000
+	AreaLevel >= 75
+	SetFontSize 32
+	SetTextColor 255 235 180
+
+Show # GOLD — early maps, lower threshold
+	BaseType == "Gold"
+	StackSize >= 300
+	AreaLevel < 75
+	SetFontSize 32
+	SetTextColor 255 235 180
+
+Hide # GOLD — small stacks
+	BaseType == "Gold"
+
+
+#===============================================================================
+# [2500] WAYSTONES / TABLETS / FRAGMENTS
+#===============================================================================
+
+Show # WAYSTONES — at or above current mapping tier
+	Class == "Waystones"
+	WaystoneTier >= 10
+	SetFontSize 42
+	SetTextColor 255 255 255
+	SetBorderColor 200 160 255
+	SetBackgroundColor 45 20 70
+	MinimapIcon 1 Purple Square
+	PlayEffect Purple Temp
+
+Show # WAYSTONES — mid tier, still useful now
+	Class == "Waystones"
+	WaystoneTier >= 5
+	SetFontSize 38
+	SetTextColor 230 220 255
+	SetBorderColor 150 120 200
+
+Show # WAYSTONES — low tier, only while below high maps
+	Class == "Waystones"
+	AreaLevel < 78
+	SetFontSize 34
+	SetTextColor 200 190 220
+
+Hide # WAYSTONES — low tier once deep in maps
+	Class == "Waystones"
+
+Show # TABLETS + MAP FRAGMENTS
+	Class == "Tablet" "Map Fragments"
+	SetFontSize 40
+	SetTextColor 255 255 255
+	SetBorderColor 180 140 255
+	MinimapIcon 1 Purple Hexagon
+
+
+#===============================================================================
+# [3000] GEMS
+#===============================================================================
+
+Show # UNCUT SKILL / SPIRIT GEMS
+	BaseType "Uncut Skill Gem" "Uncut Spirit Gem"
+	SetFontSize 42
+	SetTextColor 30 230 200
+	SetBorderColor 30 230 200
+	SetBackgroundColor 0 50 45
+	PlayAlertSound 2 300
+	MinimapIcon 1 Cyan Circle
+	PlayEffect Cyan Temp
+
+Show # UNCUT SUPPORT GEMS — until T15s, then they flood
+	BaseType "Uncut Support Gem"
+	AreaLevel < 79
+	SetFontSize 38
+	SetTextColor 30 200 180
+	SetBorderColor 30 200 180
+
+Hide # UNCUT SUPPORT GEMS — high maps
+	BaseType "Uncut Support Gem"
+
+
+#===============================================================================
+# [4000] JEWELLERY + JEWELS + CHARMS — useful to both, always shown
+#===============================================================================
+
+Show # RARE JEWELLERY
+	Class == "Amulets" "Rings" "Belts"
+	Rarity Rare
+	SetFontSize 40
+	SetTextColor 255 255 119
+	SetBorderColor 255 255 255
+	SetBackgroundColor 45 45 20
+	MinimapIcon 2 White Circle
+
+Show # JEWELS
+	Class == "Jewels"
+	SetFontSize 40
+	SetTextColor 255 255 119
+	SetBorderColor 255 255 255
+
+Show # CHARMS
+	Class == "Charms"
+	Rarity Normal Magic Rare
+	SetFontSize 36
+	SetTextColor 220 220 220
+	SetBorderColor 120 120 120
+
+Show # MAGIC/NORMAL JEWELLERY — early maps only
+	Class == "Amulets" "Rings" "Belts"
+	AreaLevel < 75
+	SetFontSize 34
+	SetTextColor 200 200 200
+
+
+#===============================================================================
+# [5000] PARTY-DEAD ITEM CLASSES
+# Neither build uses these. Monk = Dex/Int, Sorceress = pure Int.
+# Rares still shown while in early maps for vendor/sale value; hidden later.
+#===============================================================================
+
+Show # DEAD WEAPON CLASSES — rare, early maps, sale value only
+	Class == "Bows" "Crossbows" "Quivers" "One Hand Maces" "Two Hand Maces" "Spears"
+	Rarity Rare
+	AreaLevel < 75
+	SetFontSize 26
+	SetTextColor 140 140 140
+	SetBorderColor 60 60 60
+
+Hide # DEAD WEAPON CLASSES — everything else
+	Class == "Bows" "Crossbows" "Quivers" "One Hand Maces" "Two Hand Maces" "Spears"
+
+Hide # STR SHIELDS — pure armour, dead for both
+	Class == "Shields"
+	BaseArmour > 0
+	BaseEnergyShield 0
+
+
+#===============================================================================
+# [6000] SCOTT — MONK / MARTIAL ARTIST  (GREEN)
+# Dex/Int. Quarterstaves. Evasion and EV/ES hybrid bases.
+# Gloves called out separately: glove transformation mechanic.
+#===============================================================================
+
+Show # SCOTT — QUARTERSTAVES, rare
+	Class == "Quarterstaves"
+	Rarity Rare
+	SetFontSize 42
+	SetTextColor 255 255 119
+	SetBorderColor 80 255 80
+	SetBackgroundColor 20 45 20
+	MinimapIcon 1 Green Diamond
+	PlayEffect Green Temp
+
+Show # SCOTT — QUARTERSTAVES, high ilvl crafting bases
+	Class == "Quarterstaves"
+	Rarity Normal Magic
+	ItemLevel >= 81
+	SetFontSize 40
+	SetTextColor 200 200 200
+	SetBorderColor 80 255 80
+	SetBackgroundColor 15 35 15
+	MinimapIcon 2 Green Diamond
+
+Show # SCOTT — QUARTERSTAVES, everything else in early maps
+	Class == "Quarterstaves"
+	AreaLevel < 75
+	SetFontSize 36
+	SetTextColor 200 200 200
+	SetBorderColor 60 180 60
+
+Show # SCOTT — GLOVES (transformation mechanic — never fold into generic armour)
+	Class == "Gloves"
+	Rarity Rare
+	SetFontSize 40
+	SetTextColor 255 255 119
+	SetBorderColor 80 255 80
+	SetBackgroundColor 20 45 20
+	MinimapIcon 2 Green Diamond
+
+Show # SCOTT — GLOVES, high ilvl bases for crafting
+	Class == "Gloves"
+	Rarity Normal Magic
+	ItemLevel >= 81
+	SetFontSize 38
+	SetBorderColor 80 255 80
+
+
+#===============================================================================
+# [6500] SORC — SORCERESS  (BLUE)
+# Pure Int. Wands, Sceptres, Staves, Foci. Energy Shield bases.
+#===============================================================================
+
+Show # SORC — INT WEAPONS, rare
+	Class == "Wands" "Sceptres" "Staves" "Foci"
+	Rarity Rare
+	SetFontSize 42
+	SetTextColor 255 255 119
+	SetBorderColor 80 160 255
+	SetBackgroundColor 15 25 55
+	MinimapIcon 1 Blue Diamond
+	PlayEffect Blue Temp
+
+Show # SORC — INT WEAPONS, high ilvl crafting bases
+	Class == "Wands" "Sceptres" "Staves" "Foci"
+	Rarity Normal Magic
+	ItemLevel >= 81
+	SetFontSize 40
+	SetTextColor 200 200 200
+	SetBorderColor 80 160 255
+	SetBackgroundColor 12 20 45
+	MinimapIcon 2 Blue Diamond
+
+Show # SORC — INT WEAPONS, everything else in early maps
+	Class == "Wands" "Sceptres" "Staves" "Foci"
+	AreaLevel < 75
+	SetFontSize 36
+	SetTextColor 200 200 200
+	SetBorderColor 60 120 200
+
+
+#===============================================================================
+# [7000] SHARED ARMOUR — by defence type, not by class
+# ES and EV/ES serve both builds. Pure ARMOUR is dead for the party.
+#===============================================================================
+
+Show # ES / EV-ES ARMOUR — rare
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Rare
+	BaseEnergyShield > 0
+	SetFontSize 40
+	SetTextColor 255 255 119
+	SetBorderColor 255 255 255
+	SetBackgroundColor 35 35 35
+	MinimapIcon 2 White Diamond
+
+Show # PURE EVASION ARMOUR — rare, Scott only
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Rare
+	BaseEvasion > 0
+	BaseEnergyShield 0
+	BaseArmour 0
+	SetFontSize 38
+	SetTextColor 255 255 119
+	SetBorderColor 80 255 80
+
+Show # ES / EV BASES — high ilvl crafting fodder
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Normal Magic
+	ItemLevel >= 81
+	BaseArmour 0
+	SetFontSize 36
+	SetTextColor 200 200 200
+	SetBorderColor 200 200 200
+
+Hide # PURE ARMOUR BASES — dead for both builds
+	Class == "Body Armours" "Boots" "Helmets" "Gloves" "Shields"
+	BaseArmour > 0
+	BaseEnergyShield 0
+	BaseEvasion 0
+
+
+#===============================================================================
+# [8000] BAND-AWARE CATCH-ALLS
+# Progressive tightening. This is what makes the filter self-adjusting.
+#===============================================================================
+
+Show # ALL RARES — early maps, still upgrading
+	Rarity Rare
+	AreaLevel < 75
+	SetFontSize 34
+	SetTextColor 255 255 119
+
+Show # RARES — mid maps, high ilvl only
+	Rarity Rare
+	AreaLevel < 80
+	ItemLevel >= 75
+	SetFontSize 32
+	SetTextColor 255 255 119
+
+Hide # RARES — high maps, nothing already matched above
+	Rarity Rare
+	AreaLevel >= 80
+
+Show # MAGIC / NORMAL — campaign only
+	Rarity Normal Magic
+	AreaLevel < 65
+	SetFontSize 30
+
+Hide # MAGIC / NORMAL — maps
+	Rarity Normal Magic
+	AreaLevel >= 65
+
+
+#===============================================================================
+# [9999] UNRECOGNISED — LOUD ON PURPOSE
+# If you see MAGENTA, the filter doesn't know this item. Tell Claude.
+# This is the guard against silently hiding new league content.
+#===============================================================================
+
+Show # UNKNOWN ITEM — FILTER NEEDS UPDATING
+	SetFontSize 45
+	SetTextColor 255 0 255
+	SetBorderColor 0 255 255
+	SetBackgroundColor 60 0 60
+	PlayAlertSound 4 300
+	MinimapIcon 0 Pink Cross
+	PlayEffect Pink

@@ -1,0 +1,43 @@
+# Verified PoE2 item Class names.
+# Extracted from NeverSink's live PoE2 filter (SEMI-STRICT), 2026-07-23.
+# Regenerate with: scripts/refresh-classes.sh
+Amulets
+Augment
+Belts
+Body Armours
+Boots
+Bows
+Bucklers
+Charms
+Crossbows
+Expedition Logbook
+Fishing Rods
+Foci
+Gloves
+Helmets
+Incubators
+Instance Local Items
+Jewels
+Life Flasks
+Mana Flasks
+Map Fragments
+Omen
+One Hand Maces
+Pinnacle Keys
+Quarterstaves
+Quest Items
+Quivers
+Rings
+Sceptres
+Shields
+Skill Gems
+Spears
+Stackable Currency
+Staves
+Support Gems
+Tablet
+Talismans
+Two Hand Maces
+Vault Keys
+Wands
+Waystones
