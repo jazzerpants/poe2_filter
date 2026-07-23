@@ -5,6 +5,35 @@ the reasoning is what prevents relitigating settled decisions later.
 
 ---
 
+## Unreleased
+
+### Changed
+
+- **Partner ascendancy confirmed: Disciple of Varashta** (Sorceress, added in
+  0.4 Last of the Druids). Recorded in `references/characters.md`.
+
+**No filter changes required — v1.0.0 already handles this build correctly.**
+Verified rather than assumed:
+
+- Energy Shield priority confirmed by the ascendancy's own design (Navira grants
+  ES recovery; The Fourth Teaching grants 40% more ES Recharge Rate on low ES).
+  Existing ES-first armour rules are right.
+- **`Staves` must stay in her weapon rules.** An ascendancy node allows wielding
+  a Staff and Focus *together*. This closes the v1.0.0 open question about
+  trimming `Staves` for clutter reduction — the answer is no.
+- `Sceptres` stay live; they grant Spirit, relevant if she leans summoner.
+- One node converts Energy Shield to Armour. She would still want ES bases,
+  which then convert — not Armour bases. The pure-Armour `Hide` remains correct.
+
+### Still open
+
+- Whether she plays summoner-leaning or pure caster. The ascendancy supports
+  both (Instruments of Power / Baryanic Leylines allow skipping summons
+  entirely), so it can't be inferred from the ascendancy alone.
+- Scott's weapon (quarterstaff assumed) and which Hollow Technique he centres on.
+
+---
+
 ## v1.0.0 — 2026-07-23
 
 Initial shared filter. Monk/Martial Artist (73) + Sorceress (73), early maps.

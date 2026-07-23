@@ -57,29 +57,53 @@ Ancients. Core mechanics as understood:
 
 ---
 
-## Partner — Sorceress
+## Partner — Sorceress / Disciple of Varashta
 
 | Field | Value |
 |---|---|
 | Level | 73 (as of 2026-07-23) |
 | Class | Sorceress |
-| Ascendancy | *unconfirmed — Stormweaver / Chronomancer / Disciple of Varashta* |
+| Ascendancy | Disciple of Varashta |
 | poe.ninja | *not yet — needs level 80 for ladder indexing* |
 | Progression | Same as Scott, early waystones |
 
+### Build notes
+
+Disciple of Varashta was added in 0.4 (Last of the Druids). It is a
+"build your own summoner" ascendancy built around commanding three invulnerable
+Djinn — Ruzhan (fire, heavy damage), Kelari (crit burst and corpse mechanics),
+and Navira (support: Energy Shield recovery, flask generation, sustain).
+
+Crucially it is *flexible*: ascendancy nodes such as Instruments of Power and
+Baryanic Leylines let her skip summoning entirely and play as a straight spell
+caster using the Djinn only for buffs and debuffs. So "summoner" is not a safe
+assumption — the same ascendancy supports a pure caster.
+
 ### Filter implications
 
-- **Pure Int** → Energy Shield bases. Wands, Sceptres, Staves, Foci.
-- Ascendancy and damage element are **low-impact for filtering**. Item filters
-  key off item class, defence type, and item level — not which element a build
-  scales. Worth confirming eventually for gear-goal conversations, not blocking.
-- Currently showing all four Int weapon classes. If she's locked to wand+focus
-  and never staves, we can trim `Staves` and cut more clutter.
+- **Pure Int** → Energy Shield bases. Confirmed by the ascendancy's own design:
+  Navira provides ES recovery, and The Fourth Teaching grants 40% more ES
+  Recharge Rate on low ES. ES is unambiguously her defensive layer.
+- **Staves AND Foci both stay live.** One ascendancy node lets her *wield a
+  Staff and Focus together* — an unusual combination. This resolves the earlier
+  open question: do **not** trim `Staves` from her weapon rules.
+- **Sceptres stay live** — they grant Spirit, which matters if she leans into
+  the summoner side.
+- Damage element (fire via Ruzhan, etc.) has **no filter impact**. Filters key
+  off item class, defence type, and item level — not what element a build
+  scales.
+
+### Watch item
+
+One ascendancy node reportedly **converts Energy Shield into Armour**. If she
+takes it, she still wants *ES bases* (which then convert) — she does **not**
+want Armour bases. The existing `Hide` on pure-Armour gear stays correct either
+way. Flagged only so it isn't mistaken for a reason to unhide Armour.
 
 ### Open questions
 
-- [ ] Ascendancy (low priority)
-- [ ] Wand + Focus, or two-hand Staff? Determines whether we keep `Staves`.
+- [ ] Summoner-leaning or pure caster? Affects how hard to prioritise Sceptres
+      and any Spirit-granting gear.
 
 ---
 
