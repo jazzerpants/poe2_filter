@@ -77,10 +77,11 @@ Disciple of Varashta was added in 0.4 (Last of the Druids). It is a
 Djinn — Ruzhan (fire, heavy damage), Kelari (crit burst and corpse mechanics),
 and Navira (support: Energy Shield recovery, flask generation, sustain).
 
-Crucially it is *flexible*: ascendancy nodes such as Instruments of Power and
-Baryanic Leylines let her skip summoning entirely and play as a straight spell
-caster using the Djinn only for buffs and debuffs. So "summoner" is not a safe
-assumption — the same ascendancy supports a pure caster.
+The ascendancy is *flexible*: nodes such as Instruments of Power and Baryanic
+Leylines let her skip summoning entirely and play as a straight spell caster,
+using the Djinn only for buffs and debuffs. **Confirmed (2026-07-23): she is
+going pure caster, not a minions build.** The Djinn are buff/debuff support,
+not the damage engine.
 
 ### Filter implications
 
@@ -90,8 +91,12 @@ assumption — the same ascendancy supports a pure caster.
 - **Staves AND Foci both stay live.** One ascendancy node lets her *wield a
   Staff and Focus together* — an unusual combination. This resolves the earlier
   open question: do **not** trim `Staves` from her weapon rules.
-- **Sceptres stay live** — they grant Spirit, which matters if she leans into
-  the summoner side.
+- **Sceptres stay live even though she's not a summoner.** They are the main
+  source of **Spirit**, and Spirit is universal in PoE2 — it powers auras,
+  heralds, and persistent buffs, not just minions. A pure caster running
+  heralds/auras still wants it. Do **not** hide or demote Sceptres.
+  *Only reconsider if play-test shows she runs zero Spirit-reserved skills* —
+  a tuning call, not a preemptive edit.
 - Damage element (fire via Ruzhan, etc.) has **no filter impact**. Filters key
   off item class, defence type, and item level — not what element a build
   scales.
@@ -105,8 +110,8 @@ way. Flagged only so it isn't mistaken for a reason to unhide Armour.
 
 ### Open questions
 
-- [ ] Summoner-leaning or pure caster? Affects how hard to prioritise Sceptres
-      and any Spirit-granting gear.
+- None. Build confirmed pure caster as of 2026-07-23. (Was: summoner vs caster,
+  which affected Sceptre/Spirit prioritisation — resolved, Sceptres stay live.)
 
 ---
 

@@ -66,10 +66,16 @@ Settled deliberately. Don't relitigate without new information.
 
 ```bash
 python3 scripts/validate.py          # must pass before any commit
+./scripts/install.sh                 # copy filter into the live PoE2 folder, then Reload in-game
 git add -A && git commit -m "..."
 git tag -a v1.1.0 -m "..."           # tag every filter change
 git push --follow-tags
 ```
+
+`install.sh` copies to `~/Documents/My Games/Path of Exile 2/` (Scott's
+CrossOver bottle symlinks its Documents there). The game does **not** hot-reload
+— always Reload in-game after running it. Override the destination with
+`POE2_FILTER_DIR=... ./scripts/install.sh`.
 
 A pre-commit hook is *not* installed on fresh clones. Install it once:
 
@@ -94,19 +100,17 @@ Docs-only changes get a normal commit and **no tag**.
 
 ## Open questions — ask Scott
 
-These are genuinely unresolved and affect filter tuning:
+Both builds are confirmed as of 2026-07-23. No open build gaps.
 
-- **Partner: summoner-leaning or pure caster?** Disciple of Varashta supports
-  both — some nodes let her skip summoning entirely. Affects how hard to
-  prioritise Sceptres and Spirit-granting gear. *Only remaining build gap.*
+- Scott — unarmed, bells (Hollow Focus), Way of the Stone Fist; quarterstaff later.
+- Partner — Sorceress / Disciple of Varashta, **pure caster, not minions**.
+  Sceptres stay live regardless: they grant Spirit, which casters use for
+  auras/heralds. Only revisit if play-test shows she reserves zero Spirit.
 
-Scott's build is confirmed as of v1.1.0 — unarmed, bells, Way of the Stone Fist,
-switching to quarterstaff later.
-
-A Path of Building 2 export code from either player would answer most of this at
-once. A passive tree URL (`pathofexile2.com/game/passive-skill-tree/...`) is a
-weaker second option — it decodes to node *hashes*, which need a lookup table to
-become names.
+The next input the filter needs is **play-test feedback**, not more build info.
+If a deeper question ever arises, a Path of Building 2 export answers most at
+once; a passive tree URL (`pathofexile2.com/game/passive-skill-tree/...`) is a
+weaker second option — it decodes to node *hashes* needing a lookup table.
 
 ## Gotchas
 
@@ -136,6 +140,7 @@ become names.
 | `references/characters.md` | Both builds. **Update every session.** |
 | `references/item-classes.txt` | Verified Class names; validator ground truth. |
 | `scripts/validate.py` | Pre-commit checks. Run before every commit. |
+| `scripts/install.sh` | Copy the filter into the live PoE2 folder. Reload in-game after. |
 | `index.html` | Live preview, served via GitHub Pages. |
 | `SKILL.md` | Fuller workflow and design rationale. |
 | `CHANGELOG.md` | What changed per version and **why**. Keep the why. |

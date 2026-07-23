@@ -123,10 +123,15 @@ readable at a glance in a party.
 
 Three paths, in order of how much setup they need:
 
-1. **Paste the file.** Save `shared.filter` to
-   `%userprofile%\Documents\My Games\Path of Exile 2\`, then in game:
-   Options → Game → Filters → select it. The game does **not** hot-reload —
-   hit Reload after every edit or you're testing the old file.
+1. **Copy the file into the game folder.** On Scott's Mac (CrossOver), run
+   `./scripts/install.sh` — it copies `shared.filter` into
+   `~/Documents/My Games/Path of Exile 2/` (the CrossOver bottle symlinks its
+   Documents there, so the game reads it straight from that Mac path). On
+   Windows the folder is `%userprofile%\Documents\My Games\Path of Exile 2\`.
+   Then in game: Options → Game → Item Filter → "shared" → Reload. The game
+   does **not** hot-reload — hit Reload after every edit or you're testing the
+   old file. Note: the game never reads filters from the install directory
+   (`Program Files\...\Grinding Gear Games\`); a copy left there does nothing.
 2. **FilterBlade** for visual preview and tweaking. Good for sanity-checking
    appearance; remember the SIMULATE caveat above.
 3. **API push** (optional, needs OAuth setup Scott hasn't done):
