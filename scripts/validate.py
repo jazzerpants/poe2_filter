@@ -4,10 +4,11 @@ Validate a PoE2 .filter file before committing.
 
 Catches the failure modes that break filters silently:
   1. Unknown Class names        -> rule never matches, item vanishes from view
-  2. Unconditional Show/Hide    -> swallows every rule below it
-  3. Shadowed rules             -> a broad Hide above a narrow Show
-  4. Malformed colour values    -> out-of-range RGB
-  5. Out-of-range font sizes    -> game clamps or ignores
+  2. Unlisted BaseType tokens   -> game refuses to load the WHOLE filter
+  3. Unconditional Show/Hide    -> swallows every rule below it
+  4. Shadowed rules             -> a broad Hide above a narrow Show
+  5. Malformed colour values    -> out-of-range RGB
+  6. Out-of-range font sizes    -> game clamps or ignores
 
 Usage:
     python3 scripts/validate.py current-filter/shared.filter
@@ -23,6 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_FILTER = ROOT / "current-filter" / "shared.filter"
 CLASS_LIST = ROOT / "references" / "item-classes.txt"
+BASETYPE_LIST = ROOT / "references" / "base-types.txt"
 
 ACTION_PREFIXES = (
     "Set", "Play", "Minimap", "Disable", "Enable", "Custom",
@@ -31,16 +33,27 @@ ACTION_PREFIXES = (
 # Conditions whose values are item Class names
 CLASS_CONDITIONS = ("Class",)
 
+# Conditions whose values are BaseType strings
+BASETYPE_CONDITIONS = ("BaseType",)
 
-def load_valid_classes():
-    if not CLASS_LIST.exists():
-        print(f"  ! {CLASS_LIST} missing - skipping Class validation")
+
+def _load_list(path, label):
+    if not path.exists():
+        print(f"  ! {path} missing - skipping {label} validation")
         return None
     return {
         line.strip()
-        for line in CLASS_LIST.read_text().splitlines()
+        for line in path.read_text().splitlines()
         if line.strip() and not line.startswith("#")
     }
+
+
+def load_valid_classes():
+    return _load_list(CLASS_LIST, "Class")
+
+
+def load_valid_basetypes():
+    return _load_list(BASETYPE_LIST, "BaseType")
 
 
 def parse_blocks(text):
@@ -92,6 +105,29 @@ def check_classes(blocks, valid):
                     problems.append(
                         f"line {b['line']}: unknown Class \"{name}\" "
                         f"- this rule will never match"
+                    )
+    return problems
+
+
+def check_base_types(blocks, valid):
+    """A BaseType token matching no real base makes PoE2 refuse to load the
+    whole filter. There is no ground-truth base list to check spellings against,
+    so we require every token to be in the verified allowlist (base-types.txt).
+    Adding a base means verifying its spelling and listing it there."""
+    problems = []
+    if valid is None:
+        return problems
+    for b in blocks:
+        for cond in b["conditions"]:
+            if not cond.startswith(BASETYPE_CONDITIONS):
+                continue
+            for name in re.findall(r'"([^"]+)"', cond):
+                if name not in valid:
+                    problems.append(
+                        f"line {b['line']}: BaseType \"{name}\" is not in "
+                        f"references/base-types.txt - if this is a real, verified "
+                        f"base, add it there; a bad BaseType token makes the game "
+                        f"refuse to load the ENTIRE filter"
                     )
     return problems
 
@@ -181,6 +217,7 @@ def main():
     text = target.read_text()
     blocks = parse_blocks(text)
     valid = load_valid_classes()
+    valid_bases = load_valid_basetypes()
 
     print(f"Validating {target.name}")
     print(f"  {len(blocks)} blocks  "
@@ -190,6 +227,7 @@ def main():
 
     errors = []
     errors += check_classes(blocks, valid)
+    errors += check_base_types(blocks, valid_bases)
     errors += check_unreachable(blocks)
     errors += check_colours(blocks)
     errors += check_font_sizes(blocks)

@@ -133,11 +133,12 @@ weaker second option — it decodes to node *hashes* needing a lookup table.
   changes item classes (command in `README.md`).
 - **`BaseType` is the opposite of `Class` — a bad token is FATAL.** A `BaseType`
   string that matches no real base makes PoE2 refuse to load the *entire* filter
-  ("Unable to parse parameter for BaseType rule"). `validate.py` does NOT catch
-  this — it checks Class names, not BaseType strings. So never add a speculative
-  or unverified BaseType as a hedge; verify the exact base first. This shipped as
-  a real bug in v1.2.0/v1.3.0 (`"Womb Gift"` two-word hedge) — see CHANGELOG
-  v1.3.1.
+  ("Unable to parse parameter for BaseType rule"). So never add a speculative or
+  unverified BaseType as a hedge; verify the exact base first. This shipped as a
+  real bug in v1.2.0/v1.3.0 (`"Womb Gift"` two-word hedge) — see CHANGELOG v1.3.1.
+  `validate.py` now guards against it: every BaseType token must be in the
+  verified allowlist `references/base-types.txt`, or validation errors. Adding a
+  new base means adding its verified token to that file.
 
 ## Files
 
@@ -146,6 +147,7 @@ weaker second option — it decodes to node *hashes* needing a lookup table.
 | `current-filter/shared.filter` | The deliverable. Edit in place. |
 | `references/characters.md` | Both builds. **Update every session.** |
 | `references/item-classes.txt` | Verified Class names; validator ground truth. |
+| `references/base-types.txt` | Verified BaseType tokens; validator allowlist. |
 | `scripts/validate.py` | Pre-commit checks. Run before every commit. |
 | `scripts/install.sh` | Copy the filter into the live PoE2 folder. Reload in-game after. |
 | `index.html` | Live preview, served via GitHub Pages. |

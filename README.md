@@ -131,10 +131,17 @@ where the game throws no error and items simply stop appearing:
 | Check | Why it matters |
 |---|---|
 | Unknown `Class` names | Typo = rule never matches, item invisible |
+| Unlisted `BaseType` tokens | Bad token = game refuses to load the **whole** filter (not silent — this one is loud) |
 | Unconditional `Show`/`Hide` | Swallows every rule below it |
 | Broad `Hide` above narrow `Show` | First-match-wins shadowing |
 | RGB outside 0–255 | Malformed colour |
 | `SetFontSize` outside 1–45 | Clamped or ignored |
+
+`BaseType` tokens are checked against an allowlist, `references/base-types.txt`,
+because there is no ground-truth base list the way there is for classes. Adding
+a new `BaseType` rule means verifying the exact spelling and adding the token to
+that file — the guard exists so a speculative/unverified base can never ship
+(it broke v1.2.0/v1.3.0; see `CHANGELOG.md` v1.3.1).
 
 Run it before every commit. Wire it as a hook if you want it enforced:
 

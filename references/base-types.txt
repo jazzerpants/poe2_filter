@@ -1,0 +1,49 @@
+# Verified PoE2 BaseType tokens used by shared.filter.
+#
+# WHY THIS FILE EXISTS
+# A BaseType token that matches no real in-game base makes PoE2 refuse to load
+# the ENTIRE filter ("Unable to parse parameter for BaseType rule"). This is the
+# opposite of a bad Class name, which silently never matches. validate.py errors
+# on any BaseType token in the filter that is not listed here, so a new base must
+# be verified and added deliberately — never hedged with a speculative spelling.
+# (This guard exists because "Womb Gift" — a two-word hedge — broke v1.2.0/1.3.0.
+# See CHANGELOG v1.3.1.)
+#
+# NOTE ON MATCHING: most rules use substring BaseType matching (no `==`), so a
+# token here is a SUBSTRING, not a full base name. "Rune" matches every rune,
+# "Divine" matches "Divine Orb", "Wombgift" matches "Lavish Wombgift", etc.
+# When you add a token, confirm the exact in-game spelling first (wiki/poe2db or
+# read it off the item), then add the substring you actually want to match.
+
+# --- Socketables (substring) ---
+Ancient Rune
+Warding Rune
+Greater Rune
+Soul Core
+Idol
+Rune
+
+# --- Breach / Genesis Tree (substring) ---
+Wombgift
+
+# --- Currency (substring) ---
+Divine
+Mirror
+Exalted
+Annulment
+Chaos
+Vaal
+Regal
+Perfect Jeweller
+
+# --- Currency (exact, ==) ---
+Gold
+
+# --- Gems (substring) ---
+Uncut Skill Gem
+Uncut Spirit Gem
+Uncut Support Gem
+
+# --- Flasks (exact, ==) ---
+Ultimate Life Flask
+Ultimate Mana Flask
