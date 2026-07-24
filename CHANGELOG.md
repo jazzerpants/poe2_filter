@@ -34,6 +34,25 @@ Verified rather than assumed:
 
 ---
 
+## v1.6.0 — 2026-07-23
+
+### Changed
+
+- **Tablets are now styled exactly like waystones.** They were bundled with map
+  fragments at font 40, a hexagon pin and *no beam*, so a Breach tablet was
+  easier to miss than a low-tier waystone. Split `Tablet` into its own rule with
+  the waystone treatment: font 42, purple border and background, purple square
+  minimap icon, and a persistent `PlayEffect Purple`. `Map Fragments` keeps its
+  previous styling in a rule of its own.
+
+  **Scoped to the whole `Tablet` class, not a `BaseType "Breach"` match.** An
+  unverified BaseType token makes PoE2 refuse to load the entire filter
+  (v1.3.1), and every tablet is map-mechanic content worth stopping for — so
+  class-wide is both the safer and the more useful choice. Breach tablets are
+  covered as a subset.
+
+---
+
 ## v1.5.0 — 2026-07-23
 
 Normal items now read as *less* interesting than magic, not equal to them.

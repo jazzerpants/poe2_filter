@@ -1,6 +1,6 @@
 #===============================================================================
 # SHARED DUO FILTER — Monk/Martial Artist + Sorceress
-# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.5.0  |  2026-07-23
+# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.6.0  |  2026-07-23
 #
 # COLOUR KEY
 #   GREEN border  = Scott's gear    (Monk / Dex+Int)
@@ -202,8 +202,21 @@ Show # WAYSTONES — low tier, only while below high maps
 Hide # WAYSTONES — low tier once deep in maps
 	Class == "Waystones"
 
-Show # TABLETS + MAP FRAGMENTS
-	Class == "Tablet" "Map Fragments"
+Show # TABLETS — treated like waystones (Breach and every other tablet)
+# Deliberately the whole Tablet class, not a BaseType match on "Breach": an
+# unverified BaseType token makes the game refuse to load the entire filter
+# (see CHANGELOG v1.3.1). Every tablet is map-mechanic content worth stopping
+# for, so class-wide is both safer and correct.
+	Class == "Tablet"
+	SetFontSize 42
+	SetTextColor 255 255 255
+	SetBorderColor 200 160 255
+	SetBackgroundColor 45 20 70
+	MinimapIcon 1 Purple Square
+	PlayEffect Purple
+
+Show # MAP FRAGMENTS
+	Class == "Map Fragments"
 	SetFontSize 40
 	SetTextColor 255 255 255
 	SetBorderColor 180 140 255
