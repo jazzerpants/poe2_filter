@@ -34,6 +34,32 @@ Verified rather than assumed:
 
 ---
 
+## v1.4.2 — 2026-07-23
+
+Second noise pass. v1.4.1 removed minimap pins from the early/mid fodder bands
+but left them on the `[high maps]` bands, so magic (blue) gear was still pinned.
+
+### Changed
+
+- **No minimap pin on any non-rare gear.** Removed the remaining `MinimapIcon`
+  from the `[high maps]` fodder bands. Pins on gear now mean exactly one thing:
+  **rare** (a real upgrade). Non-gear pins are unchanged and deliberate —
+  currency, waystones, runes/soul cores, gems, uniques, Wombgifts, tablets, the
+  unknown-item catch-all. A *magic waystone* is blue and still pinned; that is
+  the waystone rule doing its job, not a gear rule.
+- **Non-rare gear is quieter.** Crafting-fodder bands dropped from font 40–42 to
+  **34**; the "everything else" gear rules and magic/normal jewellery dropped
+  from 34–36 to **30**. Rare gear keeps its large font (40–45).
+
+Net effect at a glance: rare = big + pinned, magic/normal = small + unpinned,
+special items unchanged.
+
+**Magic and normal gear are currently the same size (34/30).** Splitting them
+further would need a duplicate rule per band; say the word if normal should be
+smaller than magic rather than equal.
+
+---
+
 ## v1.4.1 — 2026-07-23
 
 Noise fix for a v1.4.0 side effect, reported from play (a plain white
