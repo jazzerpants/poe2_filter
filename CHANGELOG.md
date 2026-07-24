@@ -34,6 +34,41 @@ Verified rather than assumed:
 
 ---
 
+## v1.5.0 — 2026-07-23
+
+Normal items now read as *less* interesting than magic, not equal to them.
+
+### Added
+
+- **Normal-only rule ahead of every non-rare gear rule, four font sizes
+  smaller.** v1.4.2 shrank normal and magic together, leaving them identical.
+  A PoE2 rule cannot vary font by rarity within one block, so each non-rare gear
+  rule is now a pair: a `[normal]` block (`Rarity Normal`, smaller font) placed
+  immediately above the original, which was narrowed to magic. 21 pairs, +21
+  blocks.
+
+  Resulting ladder — normal < magic < rare, consistently:
+
+  | | Normal | Magic | Rare |
+  |---|---|---|---|
+  | Gloves | 30 | 34 | 45 + pin |
+  | Quarterstaves / Int weapons | 30 | 34 | 42 + pin |
+  | Armour (ES/EV bases) | 30 | 34 | 40 + pin |
+  | Jewellery | 26 | 30 | 40 + pin |
+  | Charms | 32 | 36 | 36 |
+
+  Ordering matters: the `[normal]` block must stay directly above its magic
+  twin. First match wins, so swapping them would make magic items take the
+  normal styling.
+
+### Note
+
+The generator initially also twinned the `DEAD WEAPON CLASSES — everything else`
+**Hide** rule, producing a redundant normal-only Hide above an identical
+broader Hide. Removed — a rarity split on a Hide has no effect.
+
+---
+
 ## v1.4.2 — 2026-07-23
 
 Second noise pass. v1.4.1 removed minimap pins from the early/mid fodder bands
