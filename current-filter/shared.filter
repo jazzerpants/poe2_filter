@@ -1,6 +1,6 @@
 #===============================================================================
 # SHARED DUO FILTER — Monk/Martial Artist + Sorceress
-# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.4.0  |  2026-07-23
+# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.4.1  |  2026-07-23
 #
 # COLOUR KEY
 #   GREEN border  = Scott's gear    (Monk / Dex+Int)
@@ -328,7 +328,6 @@ Show # SCOTT — QUARTERSTAVES, crafting bases  [early maps]
 	SetFontSize 40
 	SetBorderColor 80 255 80
 	SetBackgroundColor 15 35 15
-	MinimapIcon 2 Green Diamond
 
 Show # SCOTT — QUARTERSTAVES, crafting bases  [mid maps]
 	Class == "Quarterstaves"
@@ -338,7 +337,6 @@ Show # SCOTT — QUARTERSTAVES, crafting bases  [mid maps]
 	SetFontSize 40
 	SetBorderColor 80 255 80
 	SetBackgroundColor 15 35 15
-	MinimapIcon 2 Green Diamond
 
 Show # SCOTT — QUARTERSTAVES, crafting bases  [high maps]
 	Class == "Quarterstaves"
@@ -373,7 +371,6 @@ Show # SCOTT — GLOVES, crafting bases (any rarity)  [early maps]
 	SetFontSize 42
 	SetBorderColor 80 255 80
 	SetBackgroundColor 15 35 15
-	MinimapIcon 2 Green Diamond
 
 Show # SCOTT — GLOVES, crafting bases (any rarity)  [mid maps]
 	Class == "Gloves"
@@ -382,7 +379,6 @@ Show # SCOTT — GLOVES, crafting bases (any rarity)  [mid maps]
 	SetFontSize 42
 	SetBorderColor 80 255 80
 	SetBackgroundColor 15 35 15
-	MinimapIcon 2 Green Diamond
 
 Show # SCOTT — GLOVES, crafting bases (any rarity)  [high maps]
 	Class == "Gloves"
@@ -425,7 +421,6 @@ Show # SORC — INT WEAPONS, crafting bases  [early maps]
 	SetFontSize 40
 	SetBorderColor 80 160 255
 	SetBackgroundColor 12 20 45
-	MinimapIcon 2 Blue Diamond
 
 Show # SORC — INT WEAPONS, crafting bases  [mid maps]
 	Class == "Wands" "Sceptres" "Staves" "Foci"
@@ -435,7 +430,6 @@ Show # SORC — INT WEAPONS, crafting bases  [mid maps]
 	SetFontSize 40
 	SetBorderColor 80 160 255
 	SetBackgroundColor 12 20 45
-	MinimapIcon 2 Blue Diamond
 
 Show # SORC — INT WEAPONS, crafting bases  [high maps]
 	Class == "Wands" "Sceptres" "Staves" "Foci"

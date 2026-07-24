@@ -34,6 +34,31 @@ Verified rather than assumed:
 
 ---
 
+## v1.4.1 — 2026-07-23
+
+Noise fix for a v1.4.0 side effect, reported from play (a plain white
+"Adorned Wraps" glove getting a minimap pin).
+
+### Fixed
+
+- **Crafting-fodder rules no longer pin ordinary items on the minimap.** The
+  `MinimapIcon` on those rules was written when the threshold was
+  `ItemLevel >= 81`, where a pin is earned. v1.4.0 lowered the early/mid bands
+  to ilvl 65/75 and the icon came along, so every glove, quarterstaff and Int
+  weapon at ilvl 65+ got a map pin — worst on **gloves**, which match at *any
+  rarity* by design (they are Scott's weapon), so plain white ones were pinned.
+  Removed `MinimapIcon` from the `[early maps]` and `[mid maps]` fodder bands.
+
+  Deliberately kept: pins on **rare** gear (a real upgrade) and on the
+  `[high maps]` ilvl 81+ fodder band (a real crafting base). Nothing is hidden
+  by this change — the items still show, just without a minimap pin.
+
+**Note on item level vs required level:** the number shown on an item's
+requirements is not its item level. The filter reads `ItemLevel`, which tracks
+the zone that dropped it — an "Adorned Wraps, level 59" can easily be ilvl 68.
+
+---
+
 ## v1.4.0 — 2026-07-23
 
 First round of real play-test tuning. Three changes, all from in-game feedback.
