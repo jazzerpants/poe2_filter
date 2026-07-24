@@ -1,6 +1,6 @@
 #===============================================================================
 # SHARED DUO FILTER — Monk/Martial Artist + Sorceress
-# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.3.1  |  2026-07-23
+# League: Runes of Aldur (0.5)  |  Trade Softcore  |  v1.4.0  |  2026-07-23
 #
 # COLOUR KEY
 #   GREEN border  = Scott's gear    (Monk / Dex+Int)
@@ -181,7 +181,7 @@ Show # WAYSTONES — at or above current mapping tier
 	SetBorderColor 200 160 255
 	SetBackgroundColor 45 20 70
 	MinimapIcon 1 Purple Square
-	PlayEffect Purple Temp
+	PlayEffect Purple
 
 Show # WAYSTONES — mid tier, still useful now
 	Class == "Waystones"
@@ -189,12 +189,15 @@ Show # WAYSTONES — mid tier, still useful now
 	SetFontSize 38
 	SetTextColor 230 220 255
 	SetBorderColor 150 120 200
+	MinimapIcon 2 Purple Square
+	PlayEffect Purple
 
 Show # WAYSTONES — low tier, only while below high maps
 	Class == "Waystones"
 	AreaLevel < 78
 	SetFontSize 34
 	SetTextColor 200 190 220
+	PlayEffect Purple
 
 Hide # WAYSTONES — low tier once deep in maps
 	Class == "Waystones"
@@ -248,21 +251,18 @@ Show # RARE JEWELLERY
 Show # JEWELS
 	Class == "Jewels"
 	SetFontSize 40
-	SetTextColor 255 255 119
 	SetBorderColor 255 255 255
 
 Show # CHARMS
 	Class == "Charms"
 	Rarity Normal Magic Rare
 	SetFontSize 36
-	SetTextColor 220 220 220
 	SetBorderColor 120 120 120
 
 Show # MAGIC/NORMAL JEWELLERY — early maps only
 	Class == "Amulets" "Rings" "Belts"
 	AreaLevel < 75
 	SetFontSize 34
-	SetTextColor 200 200 200
 
 
 #===============================================================================
@@ -320,12 +320,31 @@ Show # SCOTT — QUARTERSTAVES, rare
 	MinimapIcon 1 Green Diamond
 	PlayEffect Green Temp
 
-Show # SCOTT — QUARTERSTAVES, high ilvl crafting bases
+Show # SCOTT — QUARTERSTAVES, crafting bases  [early maps]
+	Class == "Quarterstaves"
+	Rarity Normal Magic
+	ItemLevel >= 65
+	AreaLevel < 75
+	SetFontSize 40
+	SetBorderColor 80 255 80
+	SetBackgroundColor 15 35 15
+	MinimapIcon 2 Green Diamond
+
+Show # SCOTT — QUARTERSTAVES, crafting bases  [mid maps]
+	Class == "Quarterstaves"
+	Rarity Normal Magic
+	ItemLevel >= 75
+	AreaLevel < 80
+	SetFontSize 40
+	SetBorderColor 80 255 80
+	SetBackgroundColor 15 35 15
+	MinimapIcon 2 Green Diamond
+
+Show # SCOTT — QUARTERSTAVES, crafting bases  [high maps]
 	Class == "Quarterstaves"
 	Rarity Normal Magic
 	ItemLevel >= 81
 	SetFontSize 40
-	SetTextColor 200 200 200
 	SetBorderColor 80 255 80
 	SetBackgroundColor 15 35 15
 	MinimapIcon 2 Green Diamond
@@ -334,7 +353,6 @@ Show # SCOTT — QUARTERSTAVES, everything else in early maps
 	Class == "Quarterstaves"
 	AreaLevel < 75
 	SetFontSize 36
-	SetTextColor 200 200 200
 	SetBorderColor 60 180 60
 
 Show # SCOTT — GLOVES, RARE  *** THIS IS HIS WEAPON ***
@@ -348,11 +366,28 @@ Show # SCOTT — GLOVES, RARE  *** THIS IS HIS WEAPON ***
 	MinimapIcon 1 Green Diamond
 	PlayEffect Green
 
-Show # SCOTT — GLOVES, high ilvl crafting bases (any rarity)
+Show # SCOTT — GLOVES, crafting bases (any rarity)  [early maps]
+	Class == "Gloves"
+	ItemLevel >= 65
+	AreaLevel < 75
+	SetFontSize 42
+	SetBorderColor 80 255 80
+	SetBackgroundColor 15 35 15
+	MinimapIcon 2 Green Diamond
+
+Show # SCOTT — GLOVES, crafting bases (any rarity)  [mid maps]
+	Class == "Gloves"
+	ItemLevel >= 75
+	AreaLevel < 80
+	SetFontSize 42
+	SetBorderColor 80 255 80
+	SetBackgroundColor 15 35 15
+	MinimapIcon 2 Green Diamond
+
+Show # SCOTT — GLOVES, crafting bases (any rarity)  [high maps]
 	Class == "Gloves"
 	ItemLevel >= 81
 	SetFontSize 42
-	SetTextColor 200 200 200
 	SetBorderColor 80 255 80
 	SetBackgroundColor 15 35 15
 	MinimapIcon 2 Green Diamond
@@ -364,7 +399,6 @@ Show # SCOTT — GLOVES, everything else while still gearing
 	Class == "Gloves"
 	AreaLevel < 80
 	SetFontSize 36
-	SetTextColor 200 200 200
 	SetBorderColor 60 180 60
 
 
@@ -383,12 +417,31 @@ Show # SORC — INT WEAPONS, rare
 	MinimapIcon 1 Blue Diamond
 	PlayEffect Blue Temp
 
-Show # SORC — INT WEAPONS, high ilvl crafting bases
+Show # SORC — INT WEAPONS, crafting bases  [early maps]
+	Class == "Wands" "Sceptres" "Staves" "Foci"
+	Rarity Normal Magic
+	ItemLevel >= 65
+	AreaLevel < 75
+	SetFontSize 40
+	SetBorderColor 80 160 255
+	SetBackgroundColor 12 20 45
+	MinimapIcon 2 Blue Diamond
+
+Show # SORC — INT WEAPONS, crafting bases  [mid maps]
+	Class == "Wands" "Sceptres" "Staves" "Foci"
+	Rarity Normal Magic
+	ItemLevel >= 75
+	AreaLevel < 80
+	SetFontSize 40
+	SetBorderColor 80 160 255
+	SetBackgroundColor 12 20 45
+	MinimapIcon 2 Blue Diamond
+
+Show # SORC — INT WEAPONS, crafting bases  [high maps]
 	Class == "Wands" "Sceptres" "Staves" "Foci"
 	Rarity Normal Magic
 	ItemLevel >= 81
 	SetFontSize 40
-	SetTextColor 200 200 200
 	SetBorderColor 80 160 255
 	SetBackgroundColor 12 20 45
 	MinimapIcon 2 Blue Diamond
@@ -397,7 +450,6 @@ Show # SORC — INT WEAPONS, everything else in early maps
 	Class == "Wands" "Sceptres" "Staves" "Foci"
 	AreaLevel < 75
 	SetFontSize 36
-	SetTextColor 200 200 200
 	SetBorderColor 60 120 200
 
 
@@ -426,7 +478,29 @@ Show # PURE EVASION ARMOUR — rare, Scott only
 	SetTextColor 255 255 119
 	SetBorderColor 80 255 80
 
-Show # ES BASES (incl. Armour/ES hybrids) — high ilvl crafting fodder
+Show # ES BASES (incl. Armour/ES hybrids) — crafting fodder  [early maps]
+	# Keyed on ES > 0, so Str/Int hybrids like a Hallowed Crown (armour AND ES)
+	# now show, not just pure-ES bases. Both builds are ES, so any ES base is fodder.
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Normal Magic
+	ItemLevel >= 65
+	AreaLevel < 75
+	BaseEnergyShield > 0
+	SetFontSize 36
+	SetBorderColor 200 200 200
+
+Show # ES BASES (incl. Armour/ES hybrids) — crafting fodder  [mid maps]
+	# Keyed on ES > 0, so Str/Int hybrids like a Hallowed Crown (armour AND ES)
+	# now show, not just pure-ES bases. Both builds are ES, so any ES base is fodder.
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Normal Magic
+	ItemLevel >= 75
+	AreaLevel < 80
+	BaseEnergyShield > 0
+	SetFontSize 36
+	SetBorderColor 200 200 200
+
+Show # ES BASES (incl. Armour/ES hybrids) — crafting fodder  [high maps]
 	# Keyed on ES > 0, so Str/Int hybrids like a Hallowed Crown (armour AND ES)
 	# now show, not just pure-ES bases. Both builds are ES, so any ES base is fodder.
 	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
@@ -434,10 +508,31 @@ Show # ES BASES (incl. Armour/ES hybrids) — high ilvl crafting fodder
 	ItemLevel >= 81
 	BaseEnergyShield > 0
 	SetFontSize 36
-	SetTextColor 200 200 200
 	SetBorderColor 200 200 200
 
-Show # EVASION BASES — high ilvl crafting fodder (Scott)
+Show # EVASION BASES — crafting fodder (Scott)  [early maps]
+	# Separate block preserves pure-Evasion / EV-only fodder. Keying the rule
+	# above on ES alone would have silently dropped these.
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Normal Magic
+	ItemLevel >= 65
+	AreaLevel < 75
+	BaseEvasion > 0
+	SetFontSize 36
+	SetBorderColor 200 200 200
+
+Show # EVASION BASES — crafting fodder (Scott)  [mid maps]
+	# Separate block preserves pure-Evasion / EV-only fodder. Keying the rule
+	# above on ES alone would have silently dropped these.
+	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
+	Rarity Normal Magic
+	ItemLevel >= 75
+	AreaLevel < 80
+	BaseEvasion > 0
+	SetFontSize 36
+	SetBorderColor 200 200 200
+
+Show # EVASION BASES — crafting fodder (Scott)  [high maps]
 	# Separate block preserves pure-Evasion / EV-only fodder. Keying the rule
 	# above on ES alone would have silently dropped these.
 	Class == "Body Armours" "Boots" "Helmets" "Bucklers"
@@ -445,7 +540,6 @@ Show # EVASION BASES — high ilvl crafting fodder (Scott)
 	ItemLevel >= 81
 	BaseEvasion > 0
 	SetFontSize 36
-	SetTextColor 200 200 200
 	SetBorderColor 200 200 200
 
 Hide # PURE ARMOUR BASES — dead for both builds

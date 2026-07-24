@@ -34,6 +34,56 @@ Verified rather than assumed:
 
 ---
 
+## v1.4.0 — 2026-07-23
+
+First round of real play-test tuning. Three changes, all from in-game feedback.
+
+### Changed
+
+- **Item text now reads its rarity again.** Gear rules were forcing
+  `SetTextColor 200 200 200` (grey) on magic/normal items and yellow on all
+  jewels, so rarity was invisible — a magic item looked the same as a normal
+  one. Removed `SetTextColor` from the 11 gear rules that set it, letting PoE2
+  apply its own rarity colours: **magic = blue, normal = white, rare = yellow**.
+  Deliberately *not* touched: items whose colour carries meaning rather than
+  rarity (currency orange, gems cyan, waystones purple, uniques, magenta
+  unknown-item catch-all), and the dead-weapon-class rare rule, which is dimmed
+  grey on purpose as vendor trash — un-dimming it would re-emphasise exactly
+  what is meant to fade.
+
+- **Crafting-fodder thresholds are now band-aware.** Every fodder rule required
+  `ItemLevel >= 81`, but item level tracks the zone that dropped it — at early
+  waystones (~area level 65–70) an ilvl 81 item essentially never drops, so all
+  five fodder rules were **dormant**. This is also why the v1.3.0 Armour/ES
+  hybrid fix did not surface a Normal/Magic Hallowed Crown: the rule was correct
+  but unreachable. Each fodder rule is now split into three band blocks,
+  ordered early → mid → high so first-match-wins resolves correctly:
+
+  | Band | AreaLevel | Requires |
+  |---|---|---|
+  | early maps | `< 75` | `ItemLevel >= 65` |
+  | mid maps | `75–79` | `ItemLevel >= 75` |
+  | high maps | `80+` | `ItemLevel >= 81` |
+
+  Fodder shows now and auto-tightens with progression, with no manual edits —
+  consistent with the AreaLevel-band design. Labels dropped the words "high
+  ilvl", which are no longer accurate in the lower bands.
+
+### Added
+
+- **Waystones beam at every tier.** Only the T10+ rule had `PlayEffect`, and it
+  was `Temp` (fires on drop, then stops). All three waystone tiers now get a
+  persistent `PlayEffect Purple`, and mid-tier gained a minimap icon.
+
+### Verify in game, not in the preview
+
+The rarity-colour change relies on *omitting* `SetTextColor` so the game supplies
+the default. `index.html` parses colours itself and may render those rules white
+rather than rarity-blue, so the preview can misrepresent this change. Alt-hold
+in game is ground truth.
+
+---
+
 ## v1.3.1 — 2026-07-23
 
 Hotfix — v1.3.0 (and v1.2.0) failed to load in-game.
